@@ -1,0 +1,92 @@
+---
+import { getLangFromUrl, useTranslations, getLocalizedPath, getOtherLang, getLanguageLabel } from '../i18n/utils';
+import ThemeToggle from './ThemeToggle.astro';
+import LanguageToggle from './LanguageToggle.astro';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const navLinks = [
+  { href: getLocalizedPath('/', lang), label: t('nav.home') },
+  { href: getLocalizedPath('/experience', lang), label: t('nav.experience') },
+  { href: getLocalizedPath('/research', lang), label: t('nav.research') },
+  { href: getLocalizedPath('/github', lang), label: t('nav.github') },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="sticky top-0 z-50 w-full border-b border-[var(--color-border)] bg-[var(--color-surface)]/80 backdrop-blur-md">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6">
+    <div class="flex items-center justify-between h-16">
+      <!-- Logo / Name -->
+      <a href={getLocalizedPath('/', lang)} class="group flex items-center gap-2 hover:text-[var(--color-primary)] transition-colors">
+        <span class="inline-flex items-center px-2 py-1 border-2 border-[var(--color-primary)] font-pixel text-xs text-[var(--color-primary)] group-hover:bg-[var(--color-primary)] group-hover:text-[var(--color-on-primary)] transition-colors" style="image-rendering: pixelated;">donghyun</span>
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex items-center gap-1">
+        {navLinks.map(link => (
+          <a
+            href={link.href}
+            class:list={[
+              'px-3 py-2 rounded-lg text-sm font-medium transition-colors',
+              currentPath.startsWith(link.href) && link.href !== getLocalizedPath('/', lang)
+                ? 'text-[var(--color-primary)] bg-[var(--color-primary)]/10'
+                : currentPath === link.href
+                ? 'text-[var(--color-primary)] bg-[var(--color-primary)]/10'
+                : 'text-[var(--color-on-surface-muted)] hover:text-[var(--color-on-surface)] hover:bg-[var(--color-surface-alt)]'
+            ]}
+          >
+            {link.label}
+          </a>
+        ))}
+      </nav>
+
+      <!-- Controls -->
+      <div class="flex items-center gap-2">
+        <LanguageToggle />
+        <ThemeToggle />
+        <!-- Mobile menu button -->
+        <button
+          id="mobile-menu-btn"
+          class="md:hidden p-2 rounded-lg hover:bg-[var(--color-surface-alt)] transition-colors"
+          aria-label="Toggle menu"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path id="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Nav -->
+    <nav id="mobile-menu" class="hidden md:hidden pb-4">
+      <div class="flex flex-col gap-1">
+        {navLinks.map(link => (
+          <a
+            href={link.href}
+            class:list={[
+              'px-3 py-2 rounded-lg text-sm font-medium transition-colors',
+              currentPath.startsWith(link.href)
+                ? 'text-[var(--color-primary)] bg-[var(--color-primary)]/10'
+                : 'text-[var(--color-on-surface-muted)] hover:text-[var(--color-on-surface)] hover:bg-[var(--color-surface-alt)]'
+            ]}
+          >
+            {link.label}
+          </a>
+        ))}
+      </div>
+    </nav>
+  </div>
+</header>
+
+<script is:inline>
+  const btn = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  if (btn && menu) {
+    btn.addEventListener('click', () => {
+      menu.classList.toggle('hidden');
+    });
+  }
+</script>

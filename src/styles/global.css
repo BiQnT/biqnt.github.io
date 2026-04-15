@@ -1,0 +1,116 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+  --font-pixel: 'DungGeunMo', 'Press Start 2P', monospace;
+
+  /* POSTECH Red - Pantone 215 C */
+  --color-surface: #FAFAFA;
+  --color-surface-alt: #F0F0F0;
+  --color-on-surface: #1F2937;
+  --color-on-surface-muted: #6B7280;
+  --color-primary: #A61955;
+  --color-primary-hover: #8A1447;
+  --color-on-primary: #FFFFFF;
+  --color-accent: #F59E0B;
+  --color-border: #E5E7EB;
+  --color-code-bg: #F3F4F6;
+}
+
+@font-face {
+  font-family: 'DungGeunMo';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/DungGeunMo.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-surface);
+    color: var(--color-on-surface);
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  /* Dark mode overrides */
+  html.dark body {
+    --color-surface: #0F172A;
+    --color-surface-alt: #1E293B;
+    --color-on-surface: #E2E8F0;
+    --color-on-surface-muted: #94A3B8;
+    --color-primary: #E8609A;
+    --color-primary-hover: #F08AB5;
+    --color-border: #334155;
+    --color-code-bg: #1E293B;
+  }
+
+  html.dark body {
+    background-color: var(--color-surface);
+    color: var(--color-on-surface);
+  }
+
+  /* Pixel font utility class */
+  .font-pixel {
+    font-family: var(--font-pixel);
+  }
+
+  /* Pixel-style decorative border */
+  .pixel-border {
+    border: 2px solid var(--color-border);
+    box-shadow:
+      2px 2px 0 0 var(--color-border),
+      -1px -1px 0 0 var(--color-border);
+  }
+
+  /* Pixel cursor blink */
+  .pixel-cursor::after {
+    content: '▮';
+    animation: blink 1s step-end infinite;
+    color: var(--color-primary);
+    margin-left: 2px;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  /* Pixel divider */
+  .pixel-divider {
+    border: none;
+    height: 2px;
+    background: repeating-linear-gradient(
+      90deg,
+      var(--color-border) 0px,
+      var(--color-border) 4px,
+      transparent 4px,
+      transparent 8px
+    );
+  }
+
+  /* Pixel tag style */
+  .pixel-tag {
+    font-family: var(--font-pixel);
+    font-size: 0.65rem;
+    padding: 2px 8px;
+    border: 1px solid var(--color-primary);
+    background: transparent;
+    color: var(--color-primary);
+    image-rendering: pixelated;
+  }
+
+  code {
+    font-family: var(--font-mono);
+  }
+
+  ::selection {
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
+  }
+}

@@ -1,0 +1,169 @@
+{
+  "ko": {
+    "main": [
+      {
+        "title": "학부 연구생",
+        "organization": "Center for Cryptocurrency and Blockchain Research",
+        "period": "2025.11 - 현재",
+        "location": "포항",
+        "description": "A2A 결제를 위한 신뢰 시스템 연구"
+      },
+      {
+        "title": "학부 인턴",
+        "organization": "Foundations of Programming & Computing Lab (FPC LAB)",
+        "period": "2025.06 - 2025.09",
+        "location": "포항",
+        "description": "GCC 수학 라이브러리 내 exp 함수의 구조 분석 및 최대 오차 추정 연구"
+      },
+      {
+        "title": "Co-Founder",
+        "organization": "NSIR",
+        "period": "2025.08 - 2025.10",
+        "location": "서울",
+        "description": ""
+      }
+    ],
+    "sub": [
+      {
+        "title": "Active Member",
+        "organization": "PDAO",
+        "period": "2026.02 - 현재",
+        "description": ""
+      },
+      {
+        "title": "Planning",
+        "organization": "Asia-Pacific Democracy Incubator",
+        "period": "2026.02 - 현재",
+        "description": ""
+      },
+       {
+        "title": "2025 START UP 48",
+        "organization": "1st Prize",
+        "period": "2025",
+        "description": ""
+      },
+      {
+        "title": "2025 TECHATHON SYNERGY",
+        "organization": "1st Prize",
+        "period": "2025",
+        "description": ""
+      },
+      {
+        "title": "2024 APGC-LAB IDEATHON",
+        "organization": "2nd Prize",
+        "period": "2024",
+        "description": ""
+      },
+      {
+        "title": "Cheero band Guitarist",
+        "organization": "",
+        "period": "2024.7~2025.2",
+        "description": ""
+      },
+      {
+        "title": "Bremen Guitarist",
+        "organization": "",
+        "period": "2024 - 현재",
+        "description": ""
+      }
+    ],
+    "awards": [
+      { "name": "2025 TECHATHON SYNERGY 1st Prize", "year": "2025" },
+      { "name": "2025 START UP 48 1st Prize", "year": "2025" },
+      { "name": "2024 APGC-LAB IDEATHON 2nd Prize", "year": "2024" },
+      { "name": "13기 운해장학생", "year": "" }
+    ],
+    "education": [
+      {
+        "title": "학사, 컴퓨터공학",
+        "organization": "포항공과대학교 (POSTECH)",
+        "period": "2024.02 - 2029.09 (예정)",
+        "description": "제40대 총학생회 부회장"
+      }
+    ]
+  },
+  "en": {
+    "main": [
+      {
+        "title": "Undergraduate Researcher",
+        "organization": "Center for Cryptocurrency and Blockchain Research",
+        "period": "Nov 2025 - Present",
+        "location": "Pohang",
+        "description": "Research on trust systems for A2A payment"
+      },
+      {
+        "title": "Undergraduate Intern",
+        "organization": "Foundations of Programming & Computing Lab (FPC LAB)",
+        "period": "Jun 2025 - Sep 2025",
+        "location": "Pohang",
+        "description": "Structural analysis of the exp function in GCC math library and estimation of its maximum error"
+      },
+      {
+        "title": "Co-Founder",
+        "organization": "NSIR",
+        "period": "Aug 2025 - Oct 2025",
+        "location": "Seoul",
+        "description": ""
+      }
+    ],
+    "sub": [
+      {
+        "title": "Active Member",
+        "organization": "PDAO",
+        "period": "Feb 2026 - Present",
+        "description": ""
+      },
+      {
+        "title": "Planning",
+        "organization": "Asia-Pacific Democracy Incubator",
+        "period": "Feb 2026 - Present",
+        "description": ""
+      },
+       {
+        "title": "2025 START UP 48",
+        "organization": "1st Prize",
+        "period": "2025",
+        "description": ""
+      },
+      {
+        "title": "2025 TECHATHON SYNERGY",
+        "organization": "1st Prize",
+        "period": "2025",
+        "description": ""
+      },
+      {
+        "title": "2024 APGC-LAB IDEATHON",
+        "organization": "2nd Prize",
+        "period": "2024",
+        "description": ""
+      },
+      {
+        "title": "Cheero band Guitarist",
+        "organization": "",
+        "period": "2024.7~2025.2",
+        "description": ""
+      },
+      {
+        "title": "Bremen Guitarist",
+        "organization": "",
+        "period": "2024 - Present",
+        "description": ""
+      }
+    
+    ],
+    "awards": [
+      { "name": "2025 TECHATHON SYNERGY 1st Prize", "year": "2025" },
+      { "name": "2025 START UP 48 1st Prize", "year": "2025" },
+      { "name": "2024 APGC-LAB IDEATHON 2nd Prize", "year": "2024" },
+      { "name": "13th Cohort Unhae Scholar", "year": "" }
+    ],
+    "education": [
+      {
+        "title": "B.S. in Computer Science and Engineering",
+        "organization": "Pohang University of Science and Technology (POSTECH)",
+        "period": "Feb 2024 - Sep 2029 (Expected)",
+        "description": "Vice President of the 40th Student Government Association"
+      }
+    ]
+  }
+}

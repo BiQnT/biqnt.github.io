@@ -1,0 +1,20 @@
+---
+import { getLangFromUrl, getOtherLang, getLanguageLabel } from '../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const otherLang = getOtherLang(lang);
+const otherLabel = getLanguageLabel(otherLang);
+
+// Build the equivalent path in the other language
+const currentPath = Astro.url.pathname;
+const pathWithoutLang = currentPath.replace(/^\/(ko|en)/, '');
+const otherPath = `/${otherLang}${pathWithoutLang || '/'}`;
+---
+
+<a
+  href={otherPath}
+  class="px-2 py-1 rounded-lg text-sm font-medium text-[var(--color-on-surface-muted)] hover:text-[var(--color-on-surface)] hover:bg-[var(--color-surface-alt)] transition-colors"
+  aria-label={`Switch to ${otherLabel}`}
+>
+  {otherLabel}
+</a>

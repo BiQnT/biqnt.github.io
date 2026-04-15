@@ -1,0 +1,20 @@
+{
+  "ko": [
+    {
+      "title": "alt2obsidian",
+      "description": "Alt 강의 노트를 LLM 기반 개념 추출과 함께 Obsidian으로 가져오는 플러그인",
+      "tags": ["TypeScript", "Obsidian", "LLM"],
+      "link": "https://github.com/biqnt/alt2obsidian",
+      "status": "완료"
+    }
+  ],
+  "en": [
+    {
+      "title": "alt2obsidian",
+      "description": "Import Alt lecture notes into Obsidian with LLM-powered concept extraction",
+      "tags": ["TypeScript", "Obsidian", "LLM"],
+      "link": "https://github.com/biqnt/alt2obsidian",
+      "status": "completed"
+    }
+  ]
+}

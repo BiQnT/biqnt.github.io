@@ -1,0 +1,38 @@
+{
+  "ko": [
+    {
+      "title": "A2A 결제를 위한 신뢰 시스템",
+      "organization": "Center for Cryptocurrency and Blockchain Research",
+      "period": "2025.11 - 현재",
+      "description": "에이전트 간(A2A) 결제 환경에서의 신뢰 메커니즘 연구. 블록체인 기반 결제 시스템의 안전성과 신뢰성을 분석합니다.",
+      "tags": ["블록체인", "결제 시스템", "신뢰 모델"],
+      "status": "진행 중"
+    },
+    {
+      "title": "GCC exp 함수 구조 분석",
+      "organization": "Foundations of Programming & Computing Lab (FPC LAB)",
+      "period": "2025.06 - 2025.09",
+      "description": "GCC 수학 라이브러리 내 exp 함수의 구조적 분석을 수행하고, 최대 오차를 추정하는 연구를 진행했습니다.",
+      "tags": ["컴파일러", "수치 해석", "시스템 소프트웨어"],
+      "status": "완료"
+    }
+  ],
+  "en": [
+    {
+      "title": "Trust System for A2A Payment",
+      "organization": "Center for Cryptocurrency and Blockchain Research",
+      "period": "Nov 2025 - Present",
+      "description": "Research on trust mechanisms in agent-to-agent (A2A) payment environments. Analyzing the safety and reliability of blockchain-based payment systems.",
+      "tags": ["Blockchain", "Payment Systems", "Trust Models"],
+      "status": "In Progress"
+    },
+    {
+      "title": "Structural Analysis of GCC exp Function",
+      "organization": "Foundations of Programming & Computing Lab (FPC LAB)",
+      "period": "Jun 2025 - Sep 2025",
+      "description": "Conducted structural analysis of the exp function in the GCC math library and estimated its maximum error.",
+      "tags": ["Compilers", "Numerical Analysis", "Systems Software"],
+      "status": "Completed"
+    }
+  ]
+}

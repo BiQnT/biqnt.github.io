@@ -1,0 +1,59 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Timeline from '../../components/Timeline.astro';
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+import type { Lang } from '../../i18n/utils';
+import { locales } from '../../i18n/utils';
+import data from '../../data/experience.json';
+
+export function getStaticPaths() {
+  return locales.map(lang => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params as { lang: Lang };
+const t = useTranslations(lang);
+const { main, sub, awards, education } = data[lang];
+---
+
+<BaseLayout title={`${t('experience.title')} | ${t('home.name')}`}>
+  <h1 class="font-pixel text-3xl font-bold mb-8 pixel-cursor">{t('experience.title')}</h1>
+
+  <!-- Main Experience -->
+  <section>
+    <h2 class="font-pixel text-xl mb-6 text-[var(--color-primary)]">{'> '}{t('experience.main')}</h2>
+    <Timeline items={main} />
+  </section>
+
+  <hr class="pixel-divider my-10" />
+
+  <!-- Sub Experience: Activities & Competitions -->
+  <section>
+    <h2 class="font-pixel text-xl mb-6 text-[var(--color-primary)]">{'> '}{t('experience.sub')}</h2>
+    <Timeline items={sub} compact={true} />
+  </section>
+
+  <hr class="pixel-divider my-10" />
+
+  <!-- Awards -->
+  {awards.length > 0 && (
+    <section>
+      <h2 class="font-pixel text-xl mb-6 text-[var(--color-primary)]">{'> '}{t('experience.awards')}</h2>
+      <div class="flex flex-wrap gap-3">
+        {awards.map((award: { name: string; year: string }) => (
+          <div class="pixel-border px-4 py-2 bg-[var(--color-surface-alt)] flex items-center gap-2">
+            <span class="font-pixel text-xs text-[var(--color-accent)]">★</span>
+            <span class="text-sm font-medium">{award.name}</span>
+          </div>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <hr class="pixel-divider my-10" />
+
+  <!-- Education -->
+  <section>
+    <h2 class="font-pixel text-xl mb-6 text-[var(--color-primary)]">{'> '}{t('experience.education')}</h2>
+    <Timeline items={education} />
+  </section>
+</BaseLayout>
