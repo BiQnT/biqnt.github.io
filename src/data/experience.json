@@ -14,16 +14,16 @@
         "period": "2025.06 - 2025.09",
         "location": "포항",
         "description": "GCC 수학 라이브러리 내 exp 함수의 구조 분석 및 최대 오차 추정 연구"
-      },
+      }
+    ],
+    "sub": [
       {
         "title": "Co-Founder",
         "organization": "NSIR",
         "period": "2025.08 - 2025.10",
         "location": "서울",
         "description": ""
-      }
-    ],
-    "sub": [
+      },
       {
         "title": "Active Member",
         "organization": "PDAO",
@@ -97,16 +97,16 @@
         "period": "Jun 2025 - Sep 2025",
         "location": "Pohang",
         "description": "Structural analysis of the exp function in GCC math library and estimation of its maximum error"
-      },
+      }
+    ],
+    "sub": [
       {
         "title": "Co-Founder",
         "organization": "NSIR",
         "period": "Aug 2025 - Oct 2025",
         "location": "Seoul",
         "description": ""
-      }
-    ],
-    "sub": [
+      },
       {
         "title": "Active Member",
         "organization": "PDAO",
