@@ -1,7 +1,0 @@
-{
-  "tool_name": "Bash",
-  "tool_input_preview": "{\"command\":\"rm -f src/pages/[lang]/hobbies.astro && rm -rf src/pages/[lang]/blog && rm -f src/layouts/BlogPost.astro && rm -rf src/content/blog && rm -f src/content.config.ts && rm -f src/components/P...",
-  "error": "Exit code 1\n(eval):1: no matches found: src/pages/[lang]/hobbies.astro",
-  "timestamp": "2026-04-15T09:15:04.347Z",
-  "retry_count": 1
-}
