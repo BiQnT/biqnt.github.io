@@ -1,6 +1,13 @@
 {
   "ko": [
     {
+      "title": "두근두근 연구실 (Doki Doki Laboratory)",
+      "description": "STDEV SCIENCE Hackathon 2026 대상(대전광역시 시장상) 수상작. 학습자가 AI 학생들을 가르치는 교수 역할을 맡는 비주얼 노벨 게임. 캐릭터 디자인, 에셋 제작, Live2D 포팅 담당.",
+      "tags": ["Visual Novel", "Live2D", "Character Design", "Game"],
+      "link": "https://github.com/YUuRiIM/stdev_2026_bremen",
+      "status": "완료"
+    },
+    {
       "title": "alt2obsidian",
       "description": "Alt 강의 노트를 LLM 기반 개념 추출과 함께 Obsidian으로 가져오는 플러그인",
       "tags": ["TypeScript", "Obsidian", "LLM"],
@@ -9,6 +16,13 @@
     }
   ],
   "en": [
+    {
+      "title": "Doki Doki Laboratory (두근두근 연구실)",
+      "description": "Grand Prize winner (Daejeon Metropolitan Mayor's Award) at STDEV SCIENCE Hackathon 2026. A visual novel game where the learner plays a professor teaching AI students. Responsible for character design, asset production, and Live2D porting.",
+      "tags": ["Visual Novel", "Live2D", "Character Design", "Game"],
+      "link": "https://github.com/YUuRiIM/stdev_2026_bremen",
+      "status": "completed"
+    },
     {
       "title": "alt2obsidian",
       "description": "Import Alt lecture notes into Obsidian with LLM-powered concept extraction",

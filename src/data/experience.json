@@ -36,6 +36,12 @@
         "period": "2026.02 - 현재",
         "description": ""
       },
+      {
+        "title": "2026 STDEV SCIENCE Hackathon",
+        "organization": "대상 (대전광역시 시장상, 1st Prize)",
+        "period": "2026.04",
+        "description": ""
+      },
        {
         "title": "2025 START UP 48",
         "organization": "1st Prize",
@@ -68,6 +74,7 @@
       }
     ],
     "awards": [
+      { "name": "2026 STDEV SCIENCE Hackathon 대상 (대전광역시 시장상)", "year": "2026" },
       { "name": "2025 TECHATHON SYNERGY 1st Prize", "year": "2025" },
       { "name": "2025 START UP 48 1st Prize", "year": "2025" },
       { "name": "2024 APGC-LAB IDEATHON 2nd Prize", "year": "2024" },
@@ -119,6 +126,12 @@
         "period": "Feb 2026 - Present",
         "description": ""
       },
+      {
+        "title": "2026 STDEV SCIENCE Hackathon",
+        "organization": "Grand Prize (Daejeon Metropolitan Mayor's Award, 1st Prize)",
+        "period": "Apr 2026",
+        "description": ""
+      },
        {
         "title": "2025 START UP 48",
         "organization": "1st Prize",
@@ -149,9 +162,10 @@
         "period": "2024 - Present",
         "description": ""
       }
-    
+
     ],
     "awards": [
+      { "name": "2026 STDEV SCIENCE Hackathon Grand Prize (Daejeon Metropolitan Mayor's Award)", "year": "2026" },
       { "name": "2025 TECHATHON SYNERGY 1st Prize", "year": "2025" },
       { "name": "2025 START UP 48 1st Prize", "year": "2025" },
       { "name": "2024 APGC-LAB IDEATHON 2nd Prize", "year": "2024" },
@@ -164,6 +178,6 @@
         "period": "Feb 2024 - Sep 2029 (Expected)",
         "description": "GPA 3.9/4.3 (Major 4.0/4.3) \\ Vice President of the 40th Student Government Association"
       }
-    ]
+    ] 
   }
 }
