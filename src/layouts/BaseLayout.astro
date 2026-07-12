@@ -19,6 +19,10 @@ const lang = getLangFromUrl(Astro.url);
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Preconnect to font CDN to reduce FOUT on pixel/body fonts -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
 

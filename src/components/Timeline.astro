@@ -16,22 +16,26 @@ const { items, compact = false } = Astro.props;
 ---
 
 <div class="relative">
-  <!-- Pixel-style dotted vertical line -->
-  <div class="absolute left-[15px] top-0 bottom-0 w-0.5" style="background: repeating-linear-gradient(180deg, var(--color-primary) 0px, var(--color-primary) 3px, transparent 3px, transparent 6px);"></div>
   <div class="flex flex-col gap-6">
-    {items.map((item) => (
+    {items.map((item, index) => (
       <div class="relative pl-10">
+        <!-- Pixel-style dotted connector to the next item (not after the last) -->
+        {index < items.length - 1 && (
+          <div class="absolute left-[15px] top-[0.875rem] -bottom-6 w-0.5" style="background: repeating-linear-gradient(180deg, var(--color-primary) 0px, var(--color-primary) 3px, transparent 3px, transparent 6px);"></div>
+        )}
         <!-- Pixel square dot -->
         <div class="absolute left-2 top-2 w-3 h-3 bg-[var(--color-primary)]" style="image-rendering: pixelated;"></div>
         <div class:list={[
           'pixel-border rounded-none p-4 bg-[var(--color-surface-alt)] hover:border-[var(--color-primary)] transition-colors',
           compact ? 'p-3' : 'p-4'
         ]}>
-          <h3 class:list={[
-            'font-semibold text-[var(--color-on-surface)]',
-            compact ? 'text-sm' : ''
-          ]}>{item.title}</h3>
-          <p class="text-[var(--color-primary)] font-medium text-sm">{item.organization}</p>
+          <h3 class="font-semibold text-[var(--color-on-surface)] leading-tight">{item.title}</h3>
+          {item.organization && (
+            <p class:list={[
+              'text-[var(--color-primary)] font-medium',
+              compact ? 'text-xs' : 'text-sm'
+            ]}>{item.organization}</p>
+          )}
           <div class="flex items-center gap-2 mt-1 text-xs text-[var(--color-on-surface-muted)] font-mono">
             <span>{item.period}</span>
             {item.location && <span>· {item.location}</span>}

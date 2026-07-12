@@ -68,7 +68,7 @@ const currentPath = Astro.url.pathname;
             href={link.href}
             class:list={[
               'px-3 py-2 rounded-lg text-sm font-medium transition-colors',
-              currentPath.startsWith(link.href)
+              (currentPath.startsWith(link.href) && link.href !== getLocalizedPath('/', lang)) || currentPath === link.href
                 ? 'text-[var(--color-primary)] bg-[var(--color-primary)]/10'
                 : 'text-[var(--color-on-surface-muted)] hover:text-[var(--color-on-surface)] hover:bg-[var(--color-surface-alt)]'
             ]}

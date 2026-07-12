@@ -16,6 +16,8 @@
   --color-accent: #F59E0B;
   --color-border: #E5E7EB;
   --color-code-bg: #F3F4F6;
+  --color-status-active: #16A34A;
+  --color-status-inactive: #6B7280;
 }
 
 @font-face {
@@ -48,6 +50,8 @@
     --color-primary-hover: #F08AB5;
     --color-border: #334155;
     --color-code-bg: #1E293B;
+    --color-status-active: #4ADE80;
+    --color-status-inactive: #94A3B8;
   }
 
   html.dark body {
@@ -66,6 +70,22 @@
     box-shadow:
       2px 2px 0 0 var(--color-border),
       -1px -1px 0 0 var(--color-border);
+  }
+
+  /* Dark mode: brighten the pixel shadow so cards read against dark surfaces */
+  html.dark .pixel-border {
+    box-shadow:
+      2px 2px 0 0 var(--color-on-surface-muted),
+      -1px -1px 0 0 var(--color-on-surface-muted);
+  }
+
+  /* Accent (honors) variant: amber edge AND amber pixel shadow */
+  .pixel-border-accent,
+  html.dark .pixel-border-accent {
+    border-color: var(--color-accent);
+    box-shadow:
+      2px 2px 0 0 var(--color-accent),
+      -1px -1px 0 0 var(--color-accent);
   }
 
   /* Pixel cursor blink */
