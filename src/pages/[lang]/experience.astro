@@ -13,14 +13,15 @@ export function getStaticPaths() {
 const { lang } = Astro.params as { lang: Lang };
 const t = useTranslations(lang);
 const { main, sub, awards, education } = data[lang];
+const memberships = (data[lang] as any).memberships ?? [];
 ---
 
 <BaseLayout title={`${t('experience.title')} | ${t('home.name')}`}>
-  <h1 class="font-pixel text-3xl font-bold mb-8 pixel-cursor">{t('experience.title')}</h1>
+  <h1 class="font-pixel text-3xl font-bold mb-8">{t('experience.title')}</h1>
 
   <!-- Main Experience -->
   <section>
-    <h2 class="font-pixel text-xl mb-6 text-[var(--color-primary)]">{'> '}{t('experience.main')}</h2>
+    <h2 class="font-pixel text-xl mb-6 text-[var(--color-primary)] border-l-4 border-[var(--color-primary)] pl-3">{'> '}{t('experience.main')}</h2>
     <Timeline items={main} />
   </section>
 
@@ -28,7 +29,7 @@ const { main, sub, awards, education } = data[lang];
 
   <!-- Sub Experience: Activities & Competitions -->
   <section>
-    <h2 class="font-pixel text-xl mb-6 text-[var(--color-primary)]">{'> '}{t('experience.sub')}</h2>
+    <h2 class="font-pixel text-xl mb-6 text-[var(--color-primary)] border-l-4 border-[var(--color-primary)] pl-3">{'> '}{t('experience.sub')}</h2>
     <Timeline items={sub} compact={true} />
   </section>
 
@@ -37,23 +38,52 @@ const { main, sub, awards, education } = data[lang];
   <!-- Awards -->
   {awards.length > 0 && (
     <section>
-      <h2 class="font-pixel text-xl mb-6 text-[var(--color-primary)]">{'> '}{t('experience.awards')}</h2>
+      <h2 class="font-pixel text-xl mb-6 text-[var(--color-primary)] border-l-4 border-[var(--color-primary)] pl-3">{'> '}{t('experience.awards')}</h2>
       <div class="flex flex-wrap gap-3">
         {awards.map((award: { name: string; year: string }) => (
           <div class="pixel-border px-4 py-2 bg-[var(--color-surface-alt)] flex items-center gap-2">
             <span class="font-pixel text-xs text-[var(--color-accent)]">★</span>
             <span class="text-sm font-medium">{award.name}</span>
+            {award.year && (
+              <span class="font-mono text-xs text-[var(--color-on-surface-muted)] ml-1">{award.year}</span>
+            )}
           </div>
         ))}
       </div>
     </section>
   )}
 
-  <hr class="pixel-divider my-10" />
+  {memberships.length > 0 && <hr class="pixel-divider my-6" />}
+
+  <!-- Honors & Memberships (elevated tier) -->
+  {memberships.length > 0 && (
+    <section>
+      <h2 class="font-pixel text-xl mb-6 text-[var(--color-accent)] border-l-4 border-[var(--color-accent)] pl-3">{'> '}{t('experience.memberships')}</h2>
+      <div class="flex flex-col gap-3">
+        {memberships.map((m: { title: string; organization: string; period: string; description?: string; issuer?: string }) => (
+          <div class="pixel-border pixel-border-accent rounded-none px-5 py-4 bg-[var(--color-surface-alt)] transition-colors flex items-start gap-3">
+            <span class="text-base font-bold text-[var(--color-accent)] leading-none mt-1">◆</span>
+            <div class="min-w-0">
+              <div class="flex flex-col sm:flex-row sm:items-baseline sm:gap-x-2">
+                <span class="font-semibold text-[var(--color-accent)]">{m.title}</span>
+                <span class="text-sm text-[var(--color-primary)] font-medium">{m.organization}</span>
+              </div>
+              <p class="text-xs font-mono text-[var(--color-on-surface-muted)] mt-0.5">{m.period}</p>
+              {m.description && (
+                <p class="mt-2 text-sm text-[var(--color-on-surface-muted)]">{m.description}</p>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <hr class="pixel-divider my-8" />
 
   <!-- Education -->
   <section>
-    <h2 class="font-pixel text-xl mb-6 text-[var(--color-primary)]">{'> '}{t('experience.education')}</h2>
+    <h2 class="font-pixel text-xl mb-6 text-[var(--color-primary)] border-l-4 border-[var(--color-primary)] pl-3">{'> '}{t('experience.education')}</h2>
     <Timeline items={education} />
   </section>
 </BaseLayout>

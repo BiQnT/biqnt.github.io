@@ -2,6 +2,13 @@
   "ko": {
     "main": [
       {
+        "title": "AX Engineer 인턴",
+        "organization": "코인원 (Coinone)",
+        "period": "2026.06 - 현재",
+        "location": "서울",
+        "description": "CEX(가상자산 거래소) 대상 AI Agent 개발 및 비기술직 대상 AI 리서치"
+      },
+      {
         "title": "학부 연구생",
         "organization": "Center for Cryptocurrency and Blockchain Research",
         "period": "2025.11 - 현재",
@@ -33,31 +40,7 @@
       {
         "title": "Planning",
         "organization": "Asia-Pacific Democracy Incubator",
-        "period": "2026.02 - 현재",
-        "description": ""
-      },
-      {
-        "title": "2026 STDEV SCIENCE Hackathon",
-        "organization": "대상 (대전광역시 시장상, 1st Prize)",
-        "period": "2026.04",
-        "description": ""
-      },
-       {
-        "title": "2025 START UP 48",
-        "organization": "1st Prize",
-        "period": "2025",
-        "description": ""
-      },
-      {
-        "title": "2025 TECHATHON SYNERGY",
-        "organization": "1st Prize",
-        "period": "2025",
-        "description": ""
-      },
-      {
-        "title": "2024 APGC-LAB IDEATHON",
-        "organization": "2nd Prize",
-        "period": "2024",
+        "period": "2026.02 - 2026.07",
         "description": ""
       },
       {
@@ -80,17 +63,33 @@
       { "name": "2024 APGC-LAB IDEATHON 2nd Prize", "year": "2024" },
       { "name": "13기 운해장학생", "year": "" }
     ],
+    "memberships": [
+      {
+        "title": "차세대공학리더 (YEHS)",
+        "organization": "한국공학한림원 (NAEK)",
+        "period": "2026 - 현재",
+        "description": "제286회 NAEK Forum 차세대공학리더(YEHS) 신입회원",
+        "issuer": "한국공학한림원 · National Academy of Engineering of Korea"
+      }
+    ],
     "education": [
       {
         "title": "학사, 컴퓨터공학",
         "organization": "포항공과대학교 (POSTECH)",
         "period": "2024.02 - 2029.09 (예정)",
-        "description": "학점 3.9/4.3 (전공 4.0/4.3) \\ 제40대 총학생회 부회장"
+        "description": "학점 3.91/4.3 (전공 3.97/4.3, 97/128 credits) \\ 제40대 총학생회 부회장"
       }
     ]
   },
   "en": {
     "main": [
+      {
+        "title": "AX Engineer Intern",
+        "organization": "Coinone",
+        "period": "Jun 2026 - Present",
+        "location": "Seoul",
+        "description": "Building AI agents and conducting AI research for a crypto exchange (CEX) and its non-technical staff"
+      },
       {
         "title": "Undergraduate Researcher",
         "organization": "Center for Cryptocurrency and Blockchain Research",
@@ -123,31 +122,7 @@
       {
         "title": "Planning",
         "organization": "Asia-Pacific Democracy Incubator",
-        "period": "Feb 2026 - Present",
-        "description": ""
-      },
-      {
-        "title": "2026 STDEV SCIENCE Hackathon",
-        "organization": "Grand Prize (Daejeon Metropolitan Mayor's Award, 1st Prize)",
-        "period": "Apr 2026",
-        "description": ""
-      },
-       {
-        "title": "2025 START UP 48",
-        "organization": "1st Prize",
-        "period": "2025",
-        "description": ""
-      },
-      {
-        "title": "2025 TECHATHON SYNERGY",
-        "organization": "1st Prize",
-        "period": "2025",
-        "description": ""
-      },
-      {
-        "title": "2024 APGC-LAB IDEATHON",
-        "organization": "2nd Prize",
-        "period": "2024",
+        "period": "Feb 2026 - Jul 2026",
         "description": ""
       },
       {
@@ -171,12 +146,21 @@
       { "name": "2024 APGC-LAB IDEATHON 2nd Prize", "year": "2024" },
       { "name": "13th Cohort Unhae Scholar", "year": "" }
     ],
+    "memberships": [
+      {
+        "title": "Young Engineers Honor Society (YEHS)",
+        "organization": "National Academy of Engineering of Korea (NAEK)",
+        "period": "2026 - Present",
+        "description": "New member inducted via the 286th NAEK Forum",
+        "issuer": "한국공학한림원 · National Academy of Engineering of Korea"
+      }
+    ],
     "education": [
       {
         "title": "B.S. in Computer Science and Engineering",
         "organization": "Pohang University of Science and Technology (POSTECH)",
         "period": "Feb 2024 - Sep 2029 (Expected)",
-        "description": "GPA 3.9/4.3 (Major 4.0/4.3) \\ Vice President of the 40th Student Government Association"
+        "description": "GPA 3.91/4.3 (Major 3.97/4.3, 97/128 credits) \\ Vice President of the 40th Student Government Association"
       }
     ] 
   }
