@@ -4,8 +4,9 @@
       "title": "Hexa-Trust System for Reliable Agent-to-Agent Payment",
       "organization": "IEEE CryptoEx 2026 (IEEE ICBC 2026 연계 워크숍), 호주 브리즈번",
       "period": "2026.06 (발표 예정)",
-      "description": "에이전트 간(A2A) 결제의 신뢰성을 보장하기 위한 6가지 신뢰 모델 기반 Hexa-Trust System을 제안한 풀 페이퍼. 제1저자로 게재 확정, 2026년 6월 5일 발표 예정.",
+      "description": "IEEE CryptoEx'26 워크숍(IEEE ICBC'26 연계, 호주 브리즈번, 2026년 6월)에 풀 페이퍼로 게재 확정 — 제1저자.\n\n문제. 에이전트 간(A2A) 결제 프로토콜은 자율 에이전트 경제의 인프라로 부상하고 있지만, 기존 설계는 트랜잭션 실행에 집중하고 신뢰는 후순위로 다룹니다. LLM 기반 에이전트는 환각성 주장, 낮은 비용의 시빌(Sybil) 신원 생성, 경제적 책임을 감당하지 못하는 문제 등 고전적 전자상거래 평판 시스템이 다루도록 설계되지 않은 실패 양상을 유발합니다.\n\n기여. Hexa-Trust System(HTS)은 신뢰를 일급 설계 목표로 재정립합니다. 여섯 가지 신뢰 차원(Brief, Claim, Proof, Stake, Reputation, Constraint)을 3단계 A2A 결제 워크플로에 매핑하여 각 차원이 어떤 위협을 완화하는지 명시합니다. 핵심 기술 기여로는 심각도 가중 결함 분류를 적용한 베타 분포 기반 평판 모델, 신원 세탁을 경제적으로 비합리적으로 만드는 본드(bond) 설계, 온체인 가스 실현성을 측정한 정산 경로가 있습니다.\n\n연관성. x402, ERC-8004 같은 프로토콜이 표준화로 나아가는 가운데, HTS는 신뢰 보장을 나중에 덧붙이는 대신 에이전트 결제 인프라에 처음부터 내장하는 원칙적 프레임워크를 제시합니다.",
       "tags": ["블록체인", "A2A 결제", "신뢰 시스템", "제1저자"],
+      "link": "https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=11575532",
       "status": "게재 확정"
     },
     {
@@ -30,8 +31,9 @@
       "title": "Hexa-Trust System for Reliable Agent-to-Agent Payment",
       "organization": "IEEE CryptoEx 2026 (co-located with IEEE ICBC 2026), Brisbane, Australia",
       "period": "Jun 2026 (to appear)",
-      "description": "Full paper proposing the Hexa-Trust System, based on six trust models, to ensure reliability in agent-to-agent (A2A) payments. Accepted as first author; to be presented on June 5, 2026.",
+      "description": "Accepted as a full paper at the IEEE CryptoEx'26 Workshop (co-located with IEEE ICBC'26, Brisbane, Australia, June 2026), as first author.\n\nProblem. Agent-to-agent (A2A) payment protocols are emerging as infrastructure for the autonomous agent economy, but existing designs focus on transaction execution while leaving trust as an afterthought. LLM-based agents introduce failure modes — hallucinated claims, low-cost Sybil identity creation, inability to absorb economic consequences — that classical e-commerce reputation systems were never designed to handle.\n\nContribution. The Hexa-Trust System (HTS) repositions trust as a first-class design objective. It maps six trust dimensions (Brief, Claim, Proof, Stake, Reputation, Constraint) onto the three-phase A2A payment workflow, specifying where each dimension mitigates which threat. Key technical contributions include a Beta-distribution-based reputation model with severity-weighted fault classification, a bond design that makes identity whitewashing economically irrational, and a settlement path measured on-chain for gas feasibility.\n\nRelevance. As protocols like x402 and ERC-8004 move toward standardization, HTS offers a principled framework for embedding trust guarantees into agent payment infrastructure rather than retrofitting them later.",
       "tags": ["Blockchain", "A2A Payment", "Trust System", "First Author"],
+      "link": "https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=11575532",
       "status": "Accepted"
     },
     {
