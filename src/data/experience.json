@@ -60,8 +60,7 @@
       { "name": "2026 STDEV SCIENCE Hackathon 대상 (대전광역시 시장상)", "year": "2026" },
       { "name": "2025 TECHATHON SYNERGY 1st Prize", "year": "2025" },
       { "name": "2025 START UP 48 1st Prize", "year": "2025" },
-      { "name": "2024 APGC-LAB IDEATHON 2nd Prize", "year": "2024" },
-      { "name": "13기 운해장학생", "year": "" }
+      { "name": "2024 APGC-LAB IDEATHON 2nd Prize", "year": "2024" }
     ],
     "memberships": [
       {
@@ -70,6 +69,13 @@
         "period": "2026 - 현재",
         "description": "제286회 NAEK Forum 차세대공학리더(YEHS) 신입회원",
         "issuer": "한국공학한림원 · National Academy of Engineering of Korea"
+      },
+      {
+        "title": "제13기 운해장학생",
+        "organization": "운해장학재단",
+        "period": "2026.02",
+        "description": "학업 우수 이공계 학부생으로 제13기 운해장학생 선발",
+        "issuer": "운해장학재단 · Woonhae Scholarship Foundation"
       }
     ],
     "education": [
@@ -143,8 +149,7 @@
       { "name": "2026 STDEV SCIENCE Hackathon Grand Prize (Daejeon Metropolitan Mayor's Award)", "year": "2026" },
       { "name": "2025 TECHATHON SYNERGY 1st Prize", "year": "2025" },
       { "name": "2025 START UP 48 1st Prize", "year": "2025" },
-      { "name": "2024 APGC-LAB IDEATHON 2nd Prize", "year": "2024" },
-      { "name": "13th Cohort Unhae Scholar", "year": "" }
+      { "name": "2024 APGC-LAB IDEATHON 2nd Prize", "year": "2024" }
     ],
     "memberships": [
       {
@@ -153,6 +158,13 @@
         "period": "2026 - Present",
         "description": "New member inducted via the 286th NAEK Forum",
         "issuer": "한국공학한림원 · National Academy of Engineering of Korea"
+      },
+      {
+        "title": "13th Cohort Unhae Scholar",
+        "organization": "Woonhae Scholarship Foundation",
+        "period": "Feb 2026",
+        "description": "Selected as a 13th-cohort recipient for academic excellence in an undergraduate STEM track",
+        "issuer": "운해장학재단 · Woonhae Scholarship Foundation"
       }
     ],
     "education": [
