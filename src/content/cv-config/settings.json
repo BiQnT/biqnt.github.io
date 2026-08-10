@@ -1,0 +1,44 @@
+{
+  "showKoreanName": true,
+  "location": {
+    "ko": "포항, 대한민국",
+    "en": "Pohang, South Korea"
+  },
+  "sections": [
+    {
+      "id": "education",
+      "enabled": true,
+      "label": { "ko": "학력", "en": "Education" }
+    },
+    {
+      "id": "publications",
+      "enabled": true,
+      "label": { "ko": "논문", "en": "Publications" }
+    },
+    {
+      "id": "research",
+      "enabled": true,
+      "label": { "ko": "연구 경력", "en": "Research Experience" }
+    },
+    {
+      "id": "experience",
+      "enabled": true,
+      "label": { "ko": "경력", "en": "Experience" }
+    },
+    {
+      "id": "honors",
+      "enabled": true,
+      "label": { "ko": "수상 및 명예", "en": "Honors & Awards" }
+    },
+    {
+      "id": "projects",
+      "enabled": true,
+      "label": { "ko": "프로젝트", "en": "Projects" }
+    },
+    {
+      "id": "activities",
+      "enabled": true,
+      "label": { "ko": "대외 활동", "en": "Extracurricular" }
+    }
+  ]
+}

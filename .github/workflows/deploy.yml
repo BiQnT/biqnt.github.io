@@ -29,6 +29,14 @@ jobs:
         run: npm ci
       - name: Build
         run: npm run build
+      # CV PDF 는 사이트와 같은 데이터에서 나오므로 배포할 때마다 최신 상태로 다시 굽는다.
+      # 실패해도 사이트 배포는 계속한다. /[lang]/cv 의 브라우저 인쇄가 상시 대체 수단이다.
+      - name: Install Chromium for CV PDF
+        run: npx playwright install --with-deps chromium chromium-headless-shell
+        continue-on-error: true
+      - name: Generate CV PDFs
+        run: npm run cv:pdf
+        continue-on-error: true
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

@@ -1,0 +1,447 @@
+---
+import '../../styles/global.css';
+import { useTranslations, locales, getLocalizedPath, getOtherLang } from '../../i18n/utils';
+import type { Lang } from '../../i18n/utils';
+import { getCollection } from 'astro:content';
+import { getOrdered } from '../../lib/content';
+import { formatPeriod, type Dated } from '../../lib/period';
+import { SOCIAL } from '../../lib/site';
+
+export function getStaticPaths() {
+  return locales.map((lang) => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params as { lang: Lang };
+const t = useTranslations(lang);
+const otherLang = getOtherLang(lang);
+
+type I18nField = { ko: string; en: string };
+interface DatedItem extends Dated {
+  title: I18nField;
+  organization?: I18nField;
+  location?: I18nField;
+  description?: I18nField;
+}
+
+/** CV 는 첫 문단만 쓰고, 그 안의 줄바꿈을 불릿으로 나눈다. 서술형 문단은 이력서 어법이 아니다. */
+const bullets = (text: string): string[] =>
+  text
+    .split('\n\n')[0]
+    .split('\n')
+    .map((s) => s.trim())
+    .filter(Boolean);
+
+/** CV 전용 문장이 있으면 그것을, 없으면 사이트 설명을 쓴다. */
+const cvBody = (data: { cvText?: I18nField; description?: I18nField }) => {
+  const text = data.cvText?.[lang]?.trim() || data.description?.[lang]?.trim() || '';
+  return text ? bullets(text) : [];
+};
+
+const resolve = (data: DatedItem & { cvText?: I18nField }) => ({
+  title: data.title[lang],
+  organization: data.organization?.[lang] ?? '',
+  location: data.location?.[lang] ?? '',
+  period: formatPeriod(data, lang),
+  bullets: cvBody(data),
+});
+
+/** cv 플래그가 꺼진 항목은 CV 에서 제외한다. 사이트에는 그대로 남는다. */
+const inCv = <T extends { data: { cv: boolean } }>(list: T[]) => list.filter((e) => e.data.cv);
+
+const experience = inCv(await getOrdered('experience'));
+const positions = experience.filter((e) => e.data.kind === 'main').map((e) => resolve(e.data));
+const activities = experience.filter((e) => e.data.kind === 'sub').map((e) => resolve(e.data));
+
+const education = inCv(await getOrdered('education')).map((e) => resolve(e.data));
+const memberships = inCv(await getOrdered('memberships')).map((e) => resolve(e.data));
+const awards = inCv(await getOrdered('awards')).map((e) => ({ name: e.data.name[lang], year: e.data.year }));
+const projects = inCv(await getOrdered('projects')).map((e) => ({
+  title: e.data.title[lang],
+  bullets: cvBody(e.data),
+  link: e.data.link,
+}));
+
+const researchAll = inCv(await getOrdered('research')).map((e) => ({
+  ...resolve(e.data),
+  link: e.data.link,
+  status: e.data.status,
+}));
+const publications = researchAll.filter((r) => r.status === 'accepted');
+const researchExperience = researchAll.filter((r) => r.status !== 'accepted');
+
+/** 섹션 순서와 표기는 CV 구성 설정에서 온다. admin 에서 끌어서 바꿀 수 있다. */
+const cfg = (await getCollection('cvConfig'))[0]?.data;
+if (!cfg) throw new Error('src/content/cv-config/settings.json 이 필요합니다.');
+
+const sectionData: Record<string, { count: number }> = {
+  education: { count: education.length },
+  publications: { count: publications.length },
+  research: { count: researchExperience.length },
+  experience: { count: positions.length },
+  honors: { count: memberships.length + awards.length },
+  projects: { count: projects.length },
+  activities: { count: activities.length },
+};
+
+const sections = cfg.sections
+  .filter((s) => s.enabled && (sectionData[s.id]?.count ?? 0) > 0)
+  .map((s) => ({ id: s.id, label: s.label[lang] }));
+
+const siteUrl = `biqnt.github.io/${lang}/`;
+const pdfHref = `/cv/donghyun-ahn-cv-${lang}.pdf`;
+
+const L =
+  lang === 'ko'
+    ? {
+        print: '인쇄',
+        download: 'PDF',
+        back: '사이트로',
+        pages: (n: number) => `A4 ${n}쪽`,
+        fits: '한 장에 들어감',
+        over: '한 장을 넘음',
+        hint: '항목을 줄이려면 admin 에서 각 항목의 "CV에 포함" 을 끄세요',
+      }
+    : {
+        print: 'Print',
+        download: 'PDF',
+        back: 'Back to site',
+        pages: (n: number) => `${n} A4 page${n > 1 ? 's' : ''}`,
+        fits: 'fits on one page',
+        over: 'exceeds one page',
+        hint: 'Turn off "Include in CV" for entries in admin to trim',
+      };
+---
+
+<!DOCTYPE html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>CV | {t('home.name')}</title>
+
+    <script is:inline>
+      (function () {
+        const saved = localStorage.getItem('theme');
+        const dark = saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        document.documentElement.classList.toggle('dark', dark);
+      })();
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- 라틴은 Source Serif 4, 한글은 본명조.
+         획 대비와 굵기가 비슷해 한 문서 안에서 서로 겉돌지 않는다.
+         Computer Modern 은 LaTeX 특유의 인상이 좋지만 한글 명조와 충돌하고 1쪽을 넘긴다. -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=Noto+Serif+KR:wght@400;600;700&display=swap"
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+
+  <body class="cvbody">
+    <nav class="cvbar">
+      <a class="site-iconbtn" href={getLocalizedPath('/', lang)}>← {L.back}</a>
+      <span id="pagebadge" class="cvbar__badge" aria-live="polite"></span>
+      <span class="cvbar__spacer"></span>
+      <a class="site-iconbtn" href={getLocalizedPath('/cv', otherLang)}>{otherLang.toUpperCase()}</a>
+      <button type="button" class="site-iconbtn" id="print-btn">{L.print}</button>
+      <a class="site-cvbtn" href={pdfHref} download>{L.download}</a>
+    </nav>
+
+    <article class="paper" id="paper">
+      <header class="cv-head">
+        <h1>{t('home.nameEn')}</h1>
+        {cfg.showKoreanName && lang === 'ko' && <p class="cv-alt">{t('home.name')}</p>}
+        <p class="cv-contact">
+          <span>{cfg.location[lang]}</span>
+          <b>·</b>
+          <a href={`mailto:${SOCIAL.email}`}>{SOCIAL.email}</a>
+          <b>·</b>
+          <a href={SOCIAL.linkedin}>LinkedIn</a>
+          <b>·</b>
+          <a href={SOCIAL.github}>GitHub</a>
+          <b>·</b>
+          <a href={`https://${siteUrl}`}>Homepage</a>
+        </p>
+      </header>
+
+      {sections.map((sec) => (
+        <section class="cv-sec">
+          <h2>{sec.label}</h2>
+
+          {sec.id === 'education' && education.map((it) => (
+            <div class="cv-e">
+              <div class="cv-line">
+                <span class="cv-org">{it.organization}</span>
+                <span class="cv-right">{it.location || cfg.location[lang]}</span>
+              </div>
+              <div class="cv-line">
+                <span class="cv-role">{it.title}</span>
+                <span class="cv-right">{it.period}</span>
+              </div>
+              {it.bullets.length > 0 && <ul>{it.bullets.map((b) => <li>{b}</li>)}</ul>}
+            </div>
+          ))}
+
+          {sec.id === 'publications' && publications.map((it) => (
+            <div class="cv-e">
+              <div class="cv-line">
+                <span class="cv-org">{it.link ? <a href={it.link}>{it.title}</a> : it.title}</span>
+                <span class="cv-right">{it.period}</span>
+              </div>
+              <div class="cv-line"><span class="cv-role">{it.organization}</span></div>
+              {it.bullets.length > 0 && <ul>{it.bullets.map((b) => <li>{b}</li>)}</ul>}
+            </div>
+          ))}
+
+          {sec.id === 'research' && researchExperience.map((it) => (
+            <div class="cv-e">
+              <div class="cv-line">
+                <span class="cv-org">{it.organization}</span>
+                <span class="cv-right">{it.period}</span>
+              </div>
+              <div class="cv-line"><span class="cv-role">{it.title}</span></div>
+              {it.bullets.length > 0 && <ul>{it.bullets.map((b) => <li>{b}</li>)}</ul>}
+            </div>
+          ))}
+
+          {sec.id === 'experience' && positions.map((it) => (
+            <div class="cv-e">
+              <div class="cv-line">
+                <span class="cv-org">{it.organization || it.title}</span>
+                <span class="cv-right">{it.location}</span>
+              </div>
+              <div class="cv-line">
+                <span class="cv-role">{it.title}</span>
+                <span class="cv-right">{it.period}</span>
+              </div>
+              {it.bullets.length > 0 && <ul>{it.bullets.map((b) => <li>{b}</li>)}</ul>}
+            </div>
+          ))}
+
+          {sec.id === 'honors' && (
+            <>
+              {memberships.map((it) => (
+                <div class="cv-line cv-flat">
+                  <span><span class="cv-org">{it.title}</span>, {it.organization}</span>
+                  <span class="cv-right">{it.period}</span>
+                </div>
+              ))}
+              {awards.map((it) => (
+                <div class="cv-line cv-flat">
+                  <span>{it.name}</span>
+                  <span class="cv-right">{it.year}</span>
+                </div>
+              ))}
+            </>
+          )}
+
+          {sec.id === 'projects' && projects.map((it) => (
+            <div class="cv-e">
+              <div class="cv-line">
+                <span class="cv-org"><a href={it.link}>{it.title}</a></span>
+              </div>
+              {it.bullets.length > 0 && <ul>{it.bullets.map((b) => <li>{b}</li>)}</ul>}
+            </div>
+          ))}
+
+          {sec.id === 'activities' && activities.map((it) => (
+            <div class="cv-line cv-flat">
+              <span><span class="cv-org">{it.title}</span>{it.organization && `, ${it.organization}`}</span>
+              <span class="cv-right">{it.period}</span>
+            </div>
+          ))}
+        </section>
+      ))}
+
+    </article>
+
+    <p class="cvhint">{L.hint}</p>
+
+    <script is:inline define:vars={{ FITS: L.fits, OVER: L.over, LANG: lang }}>
+      document.getElementById('print-btn')?.addEventListener('click', () => window.print());
+
+
+      /**
+       * 화면의 종이가 인쇄물과 같은 치수(210mm 폭, pt 단위 조판)라서
+       * 넘침 여부를 눈대중이 아니라 실제로 계산할 수 있다.
+       */
+      (function () {
+        const paper = document.getElementById('paper');
+        const badge = document.getElementById('pagebadge');
+        if (!paper || !badge) return;
+
+        function pxPerMm() {
+          const probe = document.createElement('div');
+          probe.style.cssText = 'width:100mm;position:absolute;visibility:hidden';
+          document.body.appendChild(probe);
+          const v = probe.getBoundingClientRect().width / 100;
+          probe.remove();
+          return v;
+        }
+
+        function update() {
+          const mm = pxPerMm();
+          const pageContent = (297 - 15 * 2) * mm; // A4 높이에서 위아래 여백 15mm 씩 제외
+          const used = paper.scrollHeight - 30 * mm; // 화면 종이의 상하 패딩 제외
+          const pages = Math.max(1, Math.ceil(used / pageContent - 0.001));
+          const ratio = used / pageContent;
+
+          badge.textContent =
+            (LANG === 'ko' ? `A4 ${pages}쪽` : `${pages} A4 page${pages > 1 ? 's' : ''}`) +
+            ` · ${Math.round(ratio * 100)}% · ` +
+            (pages > 1 ? OVER : FITS);
+          badge.dataset.over = pages > 1 ? 'true' : 'false';
+
+          // 넘칠 경우 경계선을 그려 어디서 잘리는지 보여준다
+          paper.style.setProperty('--page-line', `${pageContent}px`);
+          paper.dataset.multipage = pages > 1 ? 'true' : 'false';
+        }
+
+        if (document.fonts?.ready) document.fonts.ready.then(update);
+        update();
+        window.addEventListener('resize', update);
+      })();
+    </script>
+  </body>
+</html>
+
+<style>
+  /* 이력서는 조판 규칙이 확립된 문서다. 사이트의 픽셀 어법을 끌고 오지 않는다. */
+  .cvbody {
+    background: var(--bg);
+    padding: 0 16px 30px;
+  }
+
+  .cvbar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    max-width: 210mm;
+    margin: 0 auto;
+    padding: 18px 0;
+    flex-wrap: wrap;
+  }
+  .cvbar__spacer { flex: 1; }
+  .cvbar__badge {
+    font-family: var(--pixel);
+    font-size: 13px;
+    padding: 5px 11px;
+    border: 1px solid var(--ok-line);
+    color: var(--ok);
+  }
+  .cvbar__badge[data-over='true'] { border-color: var(--accent); color: var(--accent); }
+
+  .cvhint {
+    max-width: 210mm;
+    margin: 14px auto 0;
+    font-size: 12.5px;
+    color: var(--dim);
+  }
+
+  /* 화면에서도 A4 실치수로 보여 준다. 인쇄 결과와 어긋나지 않는다. */
+  .paper {
+    position: relative;
+    width: 210mm;
+    max-width: 100%;
+    margin: 0 auto;
+    background: #ffffff;
+    color: #000000;
+    border: 1px solid var(--line);
+    box-shadow: 4px 4px 0 0 var(--shadow);
+    padding: 15mm;
+    font-family: 'Source Serif 4', 'Noto Serif KR', ui-serif, Georgia, serif;
+    font-size: 9.8pt;
+    line-height: 1.24;
+  }
+
+  /* 한 장을 넘으면 어디서 잘리는지 표시한다 */
+  .paper[data-multipage='true']::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(15mm + var(--page-line));
+    border-top: 1px dashed #c0392b;
+  }
+
+  /* ---- 머리말 ---- */
+  .cv-head { text-align: center; margin-bottom: 2pt; }
+  .cv-head h1 { font-size: 19pt; font-weight: 700; margin: 0; letter-spacing: 0.01em; }
+  .cv-alt { margin: 1pt 0 0; font-size: 11pt; }
+  .cv-contact {
+    margin: 3pt 0 0;
+    font-size: 9pt;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+  .cv-contact a { color: #00008b; text-decoration: underline; }
+  .cv-contact b { font-weight: 400; }
+
+  /* ---- 섹션 ---- */
+  .cv-sec { margin-top: 6pt; }
+  .cv-sec h2 {
+    font-size: 10.5pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin: 0 0 3pt;
+    padding-bottom: 1pt;
+    border-bottom: 1px solid #000000;
+  }
+
+  .cv-e { margin-bottom: 3pt; }
+  .cv-e:last-child { margin-bottom: 0; }
+
+  .cv-line {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .cv-flat { padding: 0.5pt 0; }
+  .cv-org { font-weight: 700; }
+  .cv-org a { color: #00008b; text-decoration: underline; }
+  .cv-role { font-weight: 700; }
+  .cv-right { flex-shrink: 0; font-weight: 700; white-space: nowrap; }
+
+  .paper ul { margin: 1pt 0 0; padding-left: 15pt; }
+  .paper li { margin: 0; }
+
+  /* ============================================================
+     인쇄: 화면 조판을 그대로 쓰고 종이 장식만 걷어낸다
+     ============================================================ */
+  @page {
+    size: A4;
+    margin: 15mm;
+  }
+
+  @media print {
+    .cvbody { background: #ffffff; padding: 0; }
+    .cvbar, .cvhint { display: none; }
+    .paper {
+      width: auto;
+      max-width: none;
+      margin: 0;
+      border: none;
+      box-shadow: none;
+      padding: 0;
+    }
+    .paper[data-multipage='true']::after { display: none; }
+
+    .cv-e, .cv-flat { break-inside: avoid; page-break-inside: avoid; }
+    .cv-sec h2 { break-after: avoid; page-break-after: avoid; }
+
+    .cv-contact a, .cv-org a { color: #000000; }
+  }
+
+  @media (max-width: 780px) {
+    .paper { padding: 14px 16px; font-size: 11px; }
+    .cv-line { flex-direction: column; gap: 0; }
+    .cv-right { font-weight: 400; }
+  }
+</style>
