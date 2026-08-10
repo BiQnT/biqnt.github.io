@@ -70,6 +70,9 @@ const publications = researchAll.filter((r) => r.status === 'accepted');
 const researchExperience = researchAll.filter((r) => r.status !== 'accepted');
 
 /** 섹션 순서와 표기는 CV 구성 설정에서 온다. admin 에서 끌어서 바꿀 수 있다. */
+const profile = (await getCollection('profile'))[0]?.data;
+if (!profile) throw new Error('src/content/profile/profile.json 이 필요합니다.');
+
 const cfg = (await getCollection('cvConfig'))[0]?.data;
 if (!cfg) throw new Error('src/content/cv-config/settings.json 이 필요합니다.');
 
@@ -118,7 +121,7 @@ const L =
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex" />
-    <title>CV | {t('home.name')}</title>
+    <title>CV | {profile.name[lang]}</title>
 
     <script is:inline>
       (function () {
@@ -152,8 +155,8 @@ const L =
 
     <article class="paper" id="paper">
       <header class="cv-head">
-        <h1>{t('home.nameEn')}</h1>
-        {cfg.showKoreanName && lang === 'ko' && <p class="cv-alt">{t('home.name')}</p>}
+        <h1>{profile.latinFirst} {profile.latinLast}</h1>
+        {cfg.showKoreanName && lang === 'ko' && <p class="cv-alt">{profile.name.ko}</p>}
         <p class="cv-contact">
           <span>{cfg.location[lang]}</span>
           <b>·</b>

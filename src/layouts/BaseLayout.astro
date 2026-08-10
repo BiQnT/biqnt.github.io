@@ -2,7 +2,7 @@
 import '../styles/global.css';
 import { useTranslations, getLocalizedPath, getOtherLang, getLanguageLabel } from '../i18n/utils';
 import type { Lang } from '../i18n/utils';
-import { AVATAR, CV_PATH, SOCIAL, SECTIONS } from '../lib/site';
+import { CV_PATH, SOCIAL, SECTIONS } from '../lib/site';
 import { getOrdered } from '../lib/content';
 
 interface Props {
@@ -89,19 +89,13 @@ const cvHref = CV_PATH ? getLocalizedPath(`/${CV_PATH}`, lang) : null;
       </div>
     </header>
 
+    <slot name="hero" />
+
     <div class="site-shell">
       <aside class="site-rail">
-        <div class:list={['site-profile', AVATAR && 'site-profile--photo']}>
-          {AVATAR && (
-            <div class="site-avatar"><img src={AVATAR} alt="" width="92" height="92" /></div>
-          )}
-          <h1 class="site-name">{t('home.name')}</h1>
-          <p class="site-nameEn">{t('home.nameEn')}</p>
-          <p class="site-role">{t('home.title')}</p>
-          {currentOrg && (
-            <p class="site-now"><span class="site-dot"></span>{currentOrg}</p>
-          )}
-        </div>
+        {currentOrg && (
+          <p class="site-now site-now--rail"><span class="site-dot"></span>{currentOrg}</p>
+        )}
 
         <nav class="site-toc" aria-label={t('rail.index')}>
           <p class="site-railLabel">{t('rail.index')}</p>

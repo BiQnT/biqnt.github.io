@@ -85,6 +85,8 @@ html.dark {
     line-height: 1.7;
     min-height: 100vh;
     -webkit-font-smoothing: antialiased;
+    word-break: keep-all;
+    overflow-wrap: break-word;
     background-image:
       linear-gradient(var(--grid) 1px, transparent 1px),
       linear-gradient(90deg, var(--grid) 1px, transparent 1px);
@@ -194,6 +196,150 @@ html.dark .site-theme-light { display: none; }
 @keyframes siteblink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
 /* ============================================================
+   랜딩 히어로
+   좌측에 키워드 · 큰 이름 · 소개 · CTA, 우측에 아바타 패널.
+   아바타가 없으면 픽셀 이니셜이 대신 서서 빈 자리로 보이지 않는다.
+   ============================================================ */
+.hero {
+  position: relative;
+  z-index: 2;
+  border-bottom: 1px solid var(--line);
+}
+.hero__inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 76px 40px 72px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 56px;
+  align-items: center;
+}
+.hero__text { min-width: 0; }
+
+.hero__keywords {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0 0 22px;
+  font-family: var(--pixel);
+  font-size: 14px;
+  color: var(--accent);
+  letter-spacing: 0.06em;
+}
+.hero__keywords b { color: var(--line); font-weight: 400; }
+
+.hero__name {
+  font-family: var(--pixel);
+  font-weight: 400;
+  font-size: clamp(48px, 9vw, 116px);
+  line-height: 0.98;
+  margin: 0;
+  letter-spacing: 0.01em;
+}
+.hero__nameA, .hero__nameB { display: block; }
+.hero__nameB { color: var(--accent); }
+
+.hero__sub {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 20px 0 0;
+  font-size: 15px;
+  color: var(--dim);
+}
+.hero__ko { font-family: var(--pixel); font-size: 17px; color: var(--fg); }
+.hero__sub b { font-weight: 400; color: var(--line); }
+
+.hero__intro {
+  margin: 22px 0 0;
+  max-width: 46ch;
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--desc);
+}
+
+.hero__cta { display: flex; flex-wrap: wrap; align-items: center; gap: 18px; margin-top: 34px; }
+.hero__btn {
+  font-family: var(--pixel);
+  font-size: 17px;
+  padding: 13px 28px;
+  background: var(--accent);
+  color: var(--btn-fg);
+  text-decoration: none;
+  border: 1px solid var(--accent);
+  box-shadow: 4px 4px 0 0 var(--shadow);
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+.hero__btn:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 0 var(--shadow); }
+.hero__link {
+  font-family: var(--pixel);
+  font-size: 16px;
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.14s;
+}
+.hero__link:hover { border-bottom-color: var(--accent); }
+
+.hero__panel {
+  width: 360px;
+  height: 360px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--tag-bg);
+  border: 1px solid var(--line);
+  box-shadow: 8px 8px 0 0 var(--shadow);
+  overflow: hidden;
+}
+.hero__panel img { width: 100%; height: 100%; object-fit: cover; }
+.hero__initials {
+  font-family: var(--pixel);
+  font-size: 132px;
+  line-height: 1;
+  color: var(--accent);
+  letter-spacing: 0.04em;
+}
+
+/* ---- ABOUT ---- */
+.about { padding-top: 44px; }
+.about__label {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 0 0 18px;
+  font-family: var(--pixel);
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  color: var(--dim);
+}
+.about__label i { width: 34px; height: 1px; background: var(--line); display: block; }
+.about__body { max-width: 68ch; }
+.about__body p { margin: 0 0 14px; font-size: 15.5px; line-height: 1.75; color: var(--desc); }
+.about__body p:last-child { margin-bottom: 0; }
+.about .site-stats { margin-top: 36px; }
+
+@media (max-width: 1120px) {
+  .hero__inner { grid-template-columns: minmax(0, 1fr) 240px; gap: 44px; padding: 56px 32px 52px; }
+  .hero__panel { width: 240px; height: 240px; }
+  .hero__initials { font-size: 88px; }
+}
+
+@media (max-width: 860px) {
+  .hero__inner { grid-template-columns: 1fr; gap: 34px; padding: 44px 26px 44px; }
+  .hero__panel { width: 180px; height: 180px; order: -1; box-shadow: 5px 5px 0 0 var(--shadow); }
+  .hero__initials { font-size: 66px; }
+  .about { padding-top: 32px; }
+}
+
+@media (max-width: 640px) {
+  .hero__inner { padding: 34px 18px 38px; }
+  .hero__panel { width: 132px; height: 132px; }
+  .hero__initials { font-size: 50px; }
+  .hero__intro { font-size: 15.5px; }
+}
+
+/* ============================================================
    셸: 데스크탑 2열
    ============================================================ */
 .site-shell {
@@ -212,7 +358,7 @@ html.dark .site-theme-light { display: none; }
 .site-rail {
   position: sticky;
   top: calc(var(--topbar-h) + 36px);
-  padding-top: 44px;
+  padding-top: 40px;
 }
 .site-profile { padding-bottom: 26px; border-bottom: 1px solid var(--line); }
 .site-avatar {
@@ -234,6 +380,7 @@ html.dark .site-theme-light { display: none; }
   font-size: 12.5px;
   color: var(--dim);
 }
+.site-now--rail { margin: 0 0 20px; padding-bottom: 20px; border-bottom: 1px solid var(--line); }
 .site-dot { width: 6px; height: 6px; background: var(--ok); border-radius: 50%; box-shadow: 0 0 7px var(--ok); flex-shrink: 0; }
 
 .site-railLabel {
@@ -281,7 +428,7 @@ html.dark .site-theme-light { display: none; }
 .site-railCv:hover { background: var(--accent); color: var(--btn-fg); transform: translate(2px, 2px); box-shadow: 1px 1px 0 0 var(--shadow); }
 
 /* ---- 본문 ---- */
-.site-main { min-width: 0; padding-top: 44px; }
+.site-main { min-width: 0; padding-top: 40px; }
 
 .site-hero { padding-bottom: 12px; }
 .site-greet { font-family: var(--pixel); font-size: 15px; color: var(--dim); margin: 0 0 14px; }

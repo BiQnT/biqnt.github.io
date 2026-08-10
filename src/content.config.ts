@@ -173,6 +173,26 @@ const repos = defineCollection({
 });
 
 /**
+ * 프로필. 이름과 소개 문구를 코드가 아니라 콘텐츠로 둬서 admin 에서 고칠 수 있게 한다.
+ */
+const profile = defineCollection({
+  loader: glob({ pattern: '**/*.json', base: './src/content/profile' }),
+  schema: z.object({
+    name: i18nText,
+    /** 히어로에서 두 줄로 쪼개 크게 세우는 로마자 이름 */
+    latinFirst: z.string().min(1),
+    latinLast: z.string().min(1),
+    title: i18nText,
+    /** 이름 위에 얹는 관심 분야 키워드 */
+    keywords: i18nTags,
+    /** 히어로 한 문장 */
+    intro: i18nText,
+    /** ABOUT 섹션 본문. 빈 줄로 문단을 나눈다 */
+    about: i18nText,
+  }),
+});
+
+/**
  * CV 문서 구성. 어떤 섹션을 어떤 순서로 실을지 여기서 정한다.
  * 배열 순서가 곧 CV 의 섹션 순서다. admin 에서 끌어서 바꿀 수 있다.
  */
@@ -196,4 +216,4 @@ const cvConfig = defineCollection({
   }),
 });
 
-export const collections = { experience, education, memberships, awards, projects, research, repos, cvConfig };
+export const collections = { experience, education, memberships, awards, projects, research, repos, cvConfig, profile };

@@ -392,3 +392,48 @@ collections:
                 fields:
                   - { name: ko, label: 한국어, widget: string }
                   - { name: en, label: English, widget: string }
+
+  # ─────────────────────────────────────────────
+  - name: profile
+    label: 프로필
+    files:
+      - name: profile
+        label: 이름과 소개
+        file: src/content/profile/profile.json
+        extension: json
+        format: json
+        fields:
+          - name: name
+            label: 이름
+            widget: object
+            fields:
+              - { name: ko, label: 한국어, widget: string }
+              - { name: en, label: English, widget: string }
+          - { name: latinFirst, label: 로마자 이름 (첫 줄), widget: string, hint: '히어로에 크게 세워지는 첫 줄입니다' }
+          - { name: latinLast, label: 로마자 성 (둘째 줄), widget: string, hint: '강조색으로 표시됩니다' }
+          - name: title
+            label: 소속 · 직함
+            widget: object
+            fields:
+              - { name: ko, label: 한국어, widget: string }
+              - { name: en, label: English, widget: string }
+          - name: keywords
+            label: 관심 분야 키워드
+            widget: object
+            hint: '이름 위에 한 줄로 나열됩니다. ko 와 en 의 개수가 같아야 합니다'
+            fields:
+              - { name: ko, label: 한국어, widget: list, field: { name: word, label: 키워드, widget: string } }
+              - { name: en, label: English, widget: list, field: { name: word, label: Keyword, widget: string } }
+          - name: intro
+            label: 히어로 한 문장
+            widget: object
+            fields:
+              - { name: ko, label: 한국어, widget: text }
+              - { name: en, label: English, widget: text }
+          - name: about
+            label: ABOUT 본문
+            widget: object
+            hint: '빈 줄로 문단을 나눕니다'
+            fields:
+              - { name: ko, label: 한국어, widget: text }
+              - { name: en, label: English, widget: text }
