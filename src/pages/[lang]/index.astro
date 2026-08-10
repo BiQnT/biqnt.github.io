@@ -36,8 +36,6 @@ const profile = (await getCollection('profile'))[0]?.data;
 if (!profile) throw new Error('src/content/profile/profile.json 이 필요합니다.');
 
 const cvHref = CV_PATH ? `/${lang}/${CV_PATH}` : null;
-/** 아바타가 아직 없으면 로마자 이니셜을 픽셀로 세운다. 빈 자리처럼 보이지 않게 한다. */
-const initials = (profile.latinFirst[0] + profile.latinLast[0]).toUpperCase();
 
 const experience = await getOrdered('experience');
 const main = experience.filter((e) => e.data.kind === 'main').map((e) => resolve(e.data));
@@ -109,7 +107,7 @@ const activityGroups = [...new Set(activityRows.map((r) => r.year))]
 
 <BaseLayout lang={lang} title={`${profile.name[lang]} | ${profile.title[lang]}`} description={profile.intro[lang]}>
   <section class="hero" slot="hero">
-    <div class="hero__inner">
+    <div class:list={['hero__inner', !AVATAR && 'hero__inner--solo']}>
       <div class="hero__text">
         <p class="hero__keywords">
           {profile.keywords[lang].map((k, i) => (
@@ -137,11 +135,11 @@ const activityGroups = [...new Set(activityRows.map((r) => r.year))]
         </div>
       </div>
 
-      <div class="hero__panel" aria-hidden={AVATAR ? undefined : 'true'}>
-        {AVATAR
-          ? <img src={AVATAR} alt="" width="320" height="320" />
-          : <span class="hero__initials">{initials}</span>}
-      </div>
+      {AVATAR && (
+        <div class="hero__panel">
+          <img src={AVATAR} alt="" width="360" height="360" />
+        </div>
+      )}
     </div>
   </section>
 

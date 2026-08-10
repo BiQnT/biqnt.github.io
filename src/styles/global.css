@@ -214,6 +214,7 @@ html.dark .site-theme-light { display: none; }
   gap: 56px;
   align-items: center;
 }
+.hero__inner--solo { grid-template-columns: minmax(0, 1fr); }
 .hero__text { min-width: 0; }
 
 .hero__keywords {
@@ -293,13 +294,6 @@ html.dark .site-theme-light { display: none; }
   overflow: hidden;
 }
 .hero__panel img { width: 100%; height: 100%; object-fit: cover; }
-.hero__initials {
-  font-family: var(--pixel);
-  font-size: 132px;
-  line-height: 1;
-  color: var(--accent);
-  letter-spacing: 0.04em;
-}
 
 /* ---- ABOUT ---- */
 .about { padding-top: 44px; }
@@ -322,21 +316,18 @@ html.dark .site-theme-light { display: none; }
 @media (max-width: 1120px) {
   .hero__inner { grid-template-columns: minmax(0, 1fr) 240px; gap: 44px; padding: 56px 32px 52px; }
   .hero__panel { width: 240px; height: 240px; }
-  .hero__initials { font-size: 88px; }
-}
+  }
 
 @media (max-width: 860px) {
   .hero__inner { grid-template-columns: 1fr; gap: 34px; padding: 44px 26px 44px; }
   .hero__panel { width: 180px; height: 180px; order: -1; box-shadow: 5px 5px 0 0 var(--shadow); }
-  .hero__initials { font-size: 66px; }
-  .about { padding-top: 32px; }
+    .about { padding-top: 32px; }
 }
 
 @media (max-width: 640px) {
   .hero__inner { padding: 34px 18px 38px; }
   .hero__panel { width: 132px; height: 132px; }
-  .hero__initials { font-size: 50px; }
-  .hero__intro { font-size: 15.5px; }
+    .hero__intro { font-size: 15.5px; }
 }
 
 /* ============================================================
