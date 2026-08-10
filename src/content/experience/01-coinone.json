@@ -1,0 +1,22 @@
+{
+  "kind": "main",
+  "order": 1,
+  "title": {
+    "ko": "AX Engineer 인턴",
+    "en": "AX Engineer Intern"
+  },
+  "organization": {
+    "ko": "코인원 (Coinone)",
+    "en": "Coinone"
+  },
+  "location": {
+    "ko": "서울",
+    "en": "Seoul"
+  },
+  "start": "2026-06",
+  "end": "present",
+  "description": {
+    "ko": "CEX(가상자산 거래소) 대상 AI Agent 개발 및 비기술직 대상 AI 리서치",
+    "en": "Building AI agents and conducting AI research for a crypto exchange (CEX) and its non-technical staff"
+  }
+}

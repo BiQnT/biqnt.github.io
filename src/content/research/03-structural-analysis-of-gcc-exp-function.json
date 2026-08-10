@@ -1,0 +1,30 @@
+{
+  "order": 3,
+  "title": {
+    "ko": "GCC exp 함수 구조 분석",
+    "en": "Structural Analysis of GCC exp Function"
+  },
+  "organization": {
+    "ko": "Foundations of Programming & Computing Lab (FPC LAB)",
+    "en": "Foundations of Programming & Computing Lab (FPC LAB)"
+  },
+  "start": "2025-06",
+  "end": "2025-09",
+  "description": {
+    "ko": "GCC 수학 라이브러리 내 exp 함수의 구조적 분석을 수행하고, 최대 오차를 추정하는 연구를 진행했습니다.",
+    "en": "Conducted structural analysis of the exp function in the GCC math library and estimated its maximum error."
+  },
+  "tags": {
+    "ko": [
+      "컴파일러",
+      "수치 해석",
+      "시스템 소프트웨어"
+    ],
+    "en": [
+      "Compilers",
+      "Numerical Analysis",
+      "Systems Software"
+    ]
+  },
+  "status": "completed"
+}

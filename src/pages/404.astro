@@ -1,19 +1,65 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import '../styles/global.css';
 ---
 
-<BaseLayout title="404 - Page Not Found">
-  <div class="flex flex-col items-center justify-center py-20 text-center">
-    <div class="text-6xl mb-4" style="image-rendering: pixelated;">🔍</div>
-    <h1 class="text-4xl font-bold mb-4">404</h1>
-    <p class="text-[var(--color-on-surface-muted)] mb-6">Page not found / 페이지를 찾을 수 없습니다</p>
-    <div class="flex gap-3">
-      <a href="/ko/" class="px-4 py-2 rounded-lg bg-[var(--color-primary)] text-[var(--color-on-primary)] font-medium hover:bg-[var(--color-primary-hover)] transition-colors">
-        홈으로
-      </a>
-      <a href="/en/" class="px-4 py-2 rounded-lg border border-[var(--color-border)] font-medium hover:bg-[var(--color-surface-alt)] transition-colors">
-        Go Home
-      </a>
-    </div>
-  </div>
-</BaseLayout>
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>404 | Donghyun Ahn</title>
+
+    <script is:inline>
+      (function () {
+        const saved = localStorage.getItem('theme');
+        const dark = saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        document.documentElement.classList.toggle('dark', dark);
+      })();
+    </script>
+
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+
+  <body>
+    <main class="nf">
+      <p class="nf__code">404<span class="site-caret"></span></p>
+      <h1 class="nf__title">페이지를 찾을 수 없습니다</h1>
+      <p class="nf__sub">The page you requested does not exist.</p>
+      <div class="nf__links">
+        <a class="site-cvbtn" href="/ko/">홈으로</a>
+        <a class="site-iconbtn nf__ghost" href="/en/">Go Home</a>
+      </div>
+    </main>
+  </body>
+</html>
+
+<style>
+  .nf {
+    position: relative;
+    z-index: 2;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px 24px;
+  }
+  .nf__code {
+    font-family: var(--pixel);
+    font-size: clamp(56px, 14vw, 104px);
+    line-height: 1;
+    color: var(--accent);
+    margin: 0;
+  }
+  .nf__title { font-size: 20px; font-weight: 600; margin: 22px 0 0; letter-spacing: -0.015em; }
+  .nf__sub { font-family: var(--mono); font-size: 12.5px; color: var(--dim); margin: 8px 0 0; }
+  .nf__links { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 32px; }
+  .nf__ghost { padding: 8px 16px; font-size: 12.5px; }
+</style>

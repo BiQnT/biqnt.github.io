@@ -1,0 +1,30 @@
+{
+  "order": 2,
+  "title": {
+    "ko": "A2A 결제를 위한 신뢰 시스템",
+    "en": "Trust System for A2A Payment"
+  },
+  "organization": {
+    "ko": "Center for Cryptocurrency and Blockchain Research",
+    "en": "Center for Cryptocurrency and Blockchain Research"
+  },
+  "start": "2025-11",
+  "end": "2026-06",
+  "description": {
+    "ko": "에이전트 간(A2A) 결제 환경에서의 신뢰 메커니즘 연구. 블록체인 기반 결제 시스템의 안전성과 신뢰성을 분석합니다.",
+    "en": "Research on trust mechanisms in agent-to-agent (A2A) payment environments. Analyzing the safety and reliability of blockchain-based payment systems."
+  },
+  "tags": {
+    "ko": [
+      "블록체인",
+      "결제 시스템",
+      "신뢰 모델"
+    ],
+    "en": [
+      "Blockchain",
+      "Payment Systems",
+      "Trust Models"
+    ]
+  },
+  "status": "completed"
+}

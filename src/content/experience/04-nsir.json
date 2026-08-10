@@ -1,0 +1,18 @@
+{
+  "kind": "sub",
+  "order": 4,
+  "title": {
+    "ko": "Co-Founder",
+    "en": "Co-Founder"
+  },
+  "organization": {
+    "ko": "NSIR",
+    "en": "NSIR"
+  },
+  "location": {
+    "ko": "서울",
+    "en": "Seoul"
+  },
+  "start": "2025-08",
+  "end": "2025-10"
+}

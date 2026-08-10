@@ -1,0 +1,22 @@
+{
+  "kind": "main",
+  "order": 3,
+  "title": {
+    "ko": "학부 인턴",
+    "en": "Undergraduate Intern"
+  },
+  "organization": {
+    "ko": "Foundations of Programming & Computing Lab (FPC LAB)",
+    "en": "Foundations of Programming & Computing Lab (FPC LAB)"
+  },
+  "location": {
+    "ko": "포항",
+    "en": "Pohang"
+  },
+  "start": "2025-06",
+  "end": "2025-09",
+  "description": {
+    "ko": "GCC 수학 라이브러리 내 exp 함수의 구조 분석 및 최대 오차 추정 연구",
+    "en": "Structural analysis of the exp function in GCC math library and estimation of its maximum error"
+  }
+}

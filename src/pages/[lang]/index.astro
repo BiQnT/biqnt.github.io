@@ -1,59 +1,254 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import SocialLinks from '../../components/SocialLinks.astro';
-import { getLangFromUrl, useTranslations, getLocalizedPath } from '../../i18n/utils';
+import { useTranslations, locales } from '../../i18n/utils';
 import type { Lang } from '../../i18n/utils';
-import { locales } from '../../i18n/utils';
+import { getOrdered } from '../../lib/content';
+import { formatPeriod, type Dated } from '../../lib/period';
+import { SOCIAL } from '../../lib/site';
+import { fetchRepoMeta, LANGUAGE_COLORS, NEUTRAL_LANGUAGE_COLOR } from '../../lib/github';
 
 export function getStaticPaths() {
-  return locales.map(lang => ({ params: { lang } }));
+  return locales.map((lang) => ({ params: { lang } }));
 }
 
 const { lang } = Astro.params as { lang: Lang };
 const t = useTranslations(lang);
+
+type I18nField = { ko: string; en: string };
+interface DatedItem extends Dated {
+  title: I18nField;
+  organization?: I18nField;
+  location?: I18nField;
+  description?: I18nField;
+}
+
+const resolve = (data: DatedItem) => ({
+  title: data.title[lang],
+  organization: data.organization?.[lang] ?? '',
+  location: data.location?.[lang] ?? '',
+  period: formatPeriod(data, lang),
+  year: data.start.slice(0, 4),
+  description: data.description?.[lang] ?? '',
+});
+
+const experience = await getOrdered('experience');
+const main = experience.filter((e) => e.data.kind === 'main').map((e) => resolve(e.data));
+const sub = experience.filter((e) => e.data.kind === 'sub').map((e) => resolve(e.data));
+
+const education = (await getOrdered('education')).map((e) => resolve(e.data));
+const memberships = (await getOrdered('memberships')).map((e) => resolve(e.data));
+const awards = (await getOrdered('awards')).map((e) => ({ name: e.data.name[lang], year: e.data.year }));
+
+const research = (await getOrdered('research')).map((e) => ({
+  ...resolve(e.data),
+  tags: e.data.tags[lang],
+  link: e.data.link,
+  status: t(`status.${e.data.status}`),
+  isActive: e.data.status === 'in-progress',
+}));
+
+const projects = (await getOrdered('projects')).map((e) => ({
+  title: e.data.title[lang],
+  description: e.data.description[lang],
+  tags: e.data.tags[lang],
+  link: e.data.link,
+  status: t(`status.${e.data.status}`),
+  isActive: e.data.status === 'in-progress',
+}));
+
+/**
+ * 노출할 저장소는 content/repos 에서 정하고, 설명·언어·스타는 빌드 시점에 채운다.
+ * description 을 직접 적어 두면 GitHub 설명 대신 그것을 쓴다.
+ */
+const repoMeta = await fetchRepoMeta(SOCIAL.githubUser);
+const repos = (await getOrdered('repos'))
+  .filter((e) => e.data.visible)
+  .map((e) => {
+    const meta = repoMeta.get(e.data.name);
+    return {
+      name: e.data.name,
+      url: meta?.url ?? `${SOCIAL.github}/${e.data.name}`,
+      description: e.data.description?.[lang] ?? meta?.description ?? '',
+      language: meta?.language ?? null,
+      stars: meta?.stars ?? 0,
+    };
+  });
+
+const stats = [
+  { n: research.length, label: t('stats.research') },
+  { n: main.length, label: t('stats.experience') },
+  { n: awards.length, label: t('stats.awards') },
+  { n: memberships.length, label: t('stats.honors') },
+];
+
+/**
+ * 활동과 수상을 한 표로 합친다.
+ * 수상 섹션을 따로 두면 상을 받지 않은 활동이 들어갈 자리가 없어진다.
+ * 결과 칸이 있으면 수상과 참가 이력이 같은 표에 공존한다.
+ */
+const activityRows = [
+  ...awards.map((a) => ({ year: a.year, when: a.year, name: a.name, org: '', award: true })),
+  ...sub.map((s) => ({ year: s.year, when: s.period, name: s.title, org: s.organization, award: false })),
+];
+const activityGroups = [...new Set(activityRows.map((r) => r.year))]
+  .sort()
+  .reverse()
+  .map((year) => ({
+    year,
+    items: activityRows.filter((r) => r.year === year).sort((a, b) => Number(b.award) - Number(a.award)),
+  }));
 ---
 
-<BaseLayout title={`${t('home.name')} | ${t('home.title')}`}>
-  <div class="flex flex-col items-center text-center py-12 sm:py-20">
-    <!-- Profile image: put your photo at public/images/profile.jpg -->
-    <div class="w-28 h-28 rounded-none overflow-hidden pixel-border mb-6 bg-[var(--color-primary)]/10 flex items-center justify-center" style="image-rendering: pixelated;">
-      <img
-        src="/images/profile.jpg"
-        alt="Donghyun Ahn"
-        class="w-full h-full object-cover"
-        onerror="this.style.display='none'; this.parentElement.innerHTML='<span class=\'text-4xl\'>👨‍💻</span>';"
-      />
+<BaseLayout lang={lang} title={`${t('home.name')} | ${t('home.title')}`} description={t('home.intro')}>
+  <section class="site-hero">
+    <p class="site-greet">{t('home.greeting')}</p>
+    <h2 class="site-headline">{t('home.intro')}</h2>
+    <div class="site-stats">
+      {stats.map((s) => (
+        <div class="site-stat">
+          <span class="site-statN">{String(s.n).padStart(2, '0')}</span>
+          <span class="site-statL">{s.label}</span>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- 01 주요 경력 -->
+  <section id="experience" class="site-section">
+    <h2 class="site-h2"><i>01</i>{t('section.experience')}<span></span><em>EXPERIENCE</em></h2>
+    <div class="site-tlList">
+      {main.map((it) => (
+        <article class="site-tl">
+          <div class="site-tlWhen">
+            <span class="site-tlPeriod">{it.period}</span>
+            {it.location && <span class="site-tlLoc">{it.location}</span>}
+          </div>
+          <div class="site-card">
+            <h3>{it.title}</h3>
+            {it.organization && <p class="site-org">{it.organization}</p>}
+            {it.description && <p class="site-desc">{it.description}</p>}
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <!-- 02 연구 & 논문 -->
+  <section id="research" class="site-section">
+    <h2 class="site-h2"><i>02</i>{t('section.research')}<span></span><em>RESEARCH</em></h2>
+    {research.map((it) => (
+      <article class:list={['site-card', 'site-card--paper', it.link && 'site-card--link']}>
+        <div class="site-paperTop">
+          <div class="site-paperTitle">
+            <h3>
+              {it.link
+                ? <a href={it.link} target="_blank" rel="noopener noreferrer">{it.title}<span class="site-ext"> ↗</span></a>
+                : it.title}
+            </h3>
+            <p class="site-org">{it.organization}</p>
+          </div>
+          <div class="site-paperMeta">
+            <span class:list={['site-badge', it.isActive && 'is-active']}>{it.status}</span>
+            <span class="site-when">{it.period}</span>
+          </div>
+        </div>
+        <p class="site-desc site-desc--clamp">{it.description}</p>
+        <div class="site-tags">{it.tags.map((tag) => <span class="site-tag">{tag}</span>)}</div>
+      </article>
+    ))}
+  </section>
+
+  <!-- 03 프로젝트 -->
+  <section id="projects" class="site-section">
+    <h2 class="site-h2"><i>03</i>{t('section.projects')}<span></span><em>PROJECTS</em></h2>
+    <div class="site-grid2">
+      {projects.map((it) => (
+        <a class="site-card site-card--link" href={it.link} target="_blank" rel="noopener noreferrer">
+          <div class="site-cardhead">
+            <h3>{it.title}</h3>
+            <span class:list={['site-badge', it.isActive && 'is-active']}>{it.status}</span>
+          </div>
+          <p class="site-desc">{it.description}</p>
+          <div class="site-tags">{it.tags.map((tag) => <span class="site-tag">{tag}</span>)}</div>
+        </a>
+      ))}
     </div>
 
-    <p class="font-pixel text-[var(--color-on-surface-muted)] text-sm mb-2 pixel-cursor">{t('home.greeting')}</p>
-    <h1 class="font-pixel text-2xl sm:text-3xl mb-2">
-      <span class="text-[var(--color-primary)]">{t('home.name')}</span>
-    </h1>
-    <p class="text-[var(--color-on-surface-muted)] text-lg mb-6 max-w-md">
-      {t('home.title')}
-    </p>
-    <hr class="pixel-divider w-24 mx-auto mb-6" />
-    <p class="text-[var(--color-on-surface)] max-w-lg mb-8 leading-relaxed">
-      {t('home.intro')}
-    </p>
+    {repos.length > 0 && (
+      <>
+        <p class="site-railLabel" style="margin-top: 34px;">{t('github.repos')}</p>
+        <div class="site-repos">
+          {repos.map((r) => (
+            <a class="site-repo" href={r.url} target="_blank" rel="noopener noreferrer">
+              <p class="site-repoName">{r.name}</p>
+              {r.description && <p class="site-repoDesc">{r.description}</p>}
+              <div class="site-repoMeta">
+                {r.language && (
+                  <span class="site-repoLang">
+                    <span
+                      class="site-repoDotLang"
+                      style={`background:${LANGUAGE_COLORS[r.language] ?? NEUTRAL_LANGUAGE_COLOR}`}
+                    ></span>
+                    {r.language}
+                  </span>
+                )}
+                {r.stars > 0 && <span>★ {r.stars}</span>}
+              </div>
+            </a>
+          ))}
+        </div>
+      </>
+    )}
+  </section>
 
-    <!-- CTA buttons -->
-    <div class="flex flex-wrap justify-center gap-3 mb-8">
-      <a
-        href={getLocalizedPath('/experience', lang)}
-        class="px-5 py-2.5 rounded-none pixel-border bg-[var(--color-primary)] text-[var(--color-on-primary)] font-medium hover:bg-[var(--color-primary-hover)] transition-colors"
-      >
-        {t('nav.experience')}
-      </a>
-      <a
-        href={getLocalizedPath('/research', lang)}
-        class="px-5 py-2.5 rounded-none pixel-border bg-[var(--color-surface-alt)] text-[var(--color-on-surface)] font-medium hover:bg-[var(--color-primary)]/10 hover:border-[var(--color-primary)] hover:text-[var(--color-primary)] transition-colors"
-      >
-        {t('home.cta.research')}
-      </a>
+  <!-- 04 명예 & 멤버십 -->
+  <section id="honors" class="site-section">
+    <h2 class="site-h2"><i>04</i>{t('section.honors')}<span></span><em>HONORS</em></h2>
+    <div class="site-grid2">
+      {memberships.map((it) => (
+        <article class="site-card site-card--accent">
+          <div class="site-cardhead">
+            <h3>◆ {it.title}</h3>
+            <span class="site-when">{it.period}</span>
+          </div>
+          <p class="site-org site-org--accent">{it.organization}</p>
+          {it.description && <p class="site-desc">{it.description}</p>}
+        </article>
+      ))}
     </div>
+  </section>
 
-    <SocialLinks />
-  </div>
+  <!-- 05 활동 · 대회 · 수상 -->
+  <section id="activity" class="site-section">
+    <h2 class="site-h2"><i>05</i>{t('section.activity')}<span></span><em>ACTIVITY</em></h2>
+    <p class="site-tableNote">{t('activity.note')}</p>
+    {activityGroups.map((g) => (
+      <div class="site-group">
+        <div class="site-groupHead">{g.year}</div>
+        {g.items.map((r) => (
+          <div class="site-row">
+            <span class="site-rowWhen">{r.when}</span>
+            <span class="site-rowName">{r.name}</span>
+            <span class="site-rowOrg">{r.org}</span>
+            <span class="site-rowResult">{r.award && <b>{t('activity.awarded')}</b>}</span>
+          </div>
+        ))}
+      </div>
+    ))}
+  </section>
 
+  <!-- 06 학력 -->
+  <section id="education" class="site-section">
+    <h2 class="site-h2"><i>06</i>{t('section.education')}<span></span><em>EDUCATION</em></h2>
+    {education.map((it) => (
+      <article class="site-card">
+        <div class="site-cardhead">
+          <h3>{it.title}</h3>
+          <span class="site-when">{it.period}</span>
+        </div>
+        <p class="site-org">{it.organization}</p>
+        {it.description && <p class="site-desc">{it.description}</p>}
+      </article>
+    ))}
+  </section>
 </BaseLayout>

@@ -1,0 +1,14 @@
+{
+  "kind": "sub",
+  "order": 5,
+  "title": {
+    "ko": "Active Member",
+    "en": "Active Member"
+  },
+  "organization": {
+    "ko": "PDAO",
+    "en": "PDAO"
+  },
+  "start": "2026-02",
+  "end": "present"
+}

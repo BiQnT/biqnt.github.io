@@ -1,0 +1,21 @@
+{
+  "order": 1,
+  "title": {
+    "ko": "학사, 컴퓨터공학",
+    "en": "B.S. in Computer Science and Engineering"
+  },
+  "organization": {
+    "ko": "포항공과대학교 (POSTECH)",
+    "en": "Pohang University of Science and Technology (POSTECH)"
+  },
+  "start": "2024-02",
+  "end": "2029-09",
+  "periodNote": {
+    "ko": "예정",
+    "en": "Expected"
+  },
+  "description": {
+    "ko": "학점 3.91/4.3 (전공 3.97/4.3, 97/128 credits) \\ 제40대 총학생회 부회장",
+    "en": "GPA 3.91/4.3 (Major 3.97/4.3, 97/128 credits) \\ Vice President of the 40th Student Government Association"
+  }
+}

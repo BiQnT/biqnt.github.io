@@ -1,0 +1,22 @@
+{
+  "kind": "main",
+  "order": 2,
+  "title": {
+    "ko": "학부 연구생",
+    "en": "Undergraduate Researcher"
+  },
+  "organization": {
+    "ko": "Center for Cryptocurrency and Blockchain Research",
+    "en": "Center for Cryptocurrency and Blockchain Research"
+  },
+  "location": {
+    "ko": "포항",
+    "en": "Pohang"
+  },
+  "start": "2025-11",
+  "end": "present",
+  "description": {
+    "ko": "A2A 결제를 위한 신뢰 시스템 연구",
+    "en": "Research on trust systems for A2A payment"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "order": 1,
+  "title": {
+    "ko": "두근두근 연구실 (Doki Doki Laboratory)",
+    "en": "Doki Doki Laboratory (두근두근 연구실)"
+  },
+  "description": {
+    "ko": "STDEV SCIENCE Hackathon 2026 대상(대전광역시 시장상) 수상작. 학습자가 AI 학생들을 가르치는 교수 역할을 맡는 비주얼 노벨 게임. 캐릭터 디자인, 에셋 제작, Live2D 포팅 담당.",
+    "en": "Grand Prize winner (Daejeon Metropolitan Mayor's Award) at STDEV SCIENCE Hackathon 2026. A visual novel game where the learner plays a professor teaching AI students. Responsible for character design, asset production, and Live2D porting."
+  },
+  "tags": {
+    "ko": [
+      "Visual Novel",
+      "Live2D",
+      "Character Design",
+      "Game"
+    ],
+    "en": [
+      "Visual Novel",
+      "Live2D",
+      "Character Design",
+      "Game"
+    ]
+  },
+  "link": "https://github.com/YUuRiIM/stdev_2026_bremen",
+  "status": "completed"
+}
