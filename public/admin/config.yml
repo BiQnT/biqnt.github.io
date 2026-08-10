@@ -1,0 +1,394 @@
+# Sveltia CMS 설정
+#
+# 로그인: GitHub Personal Access Token 방식을 쓴다.
+#   1) GitHub > Settings > Developer settings > Personal access tokens > Fine-grained tokens
+#   2) Repository access: biqnt/biqnt.github.io 하나만
+#   3) Permissions: Repository permissions > Contents = Read and write
+#   4) 만료일 설정 후 발급, /admin 에서 "Sign In with Token" 으로 붙여넣기
+# 토큰은 브라우저 localStorage 에만 저장된다. 공용 기기에서는 쓰지 않는다.
+#
+# 이 파일의 필드는 src/content.config.ts 의 Zod 스키마와 1:1 로 대응한다.
+# 둘 중 하나만 고치면 저장은 되어도 빌드가 실패하므로 항상 같이 고친다.
+# 진실의 원천은 Zod 쪽이다. 스키마에 맞지 않는 데이터는 배포를 통과하지 못한다.
+
+backend:
+  name: github
+  repo: biqnt/biqnt.github.io
+  branch: main
+
+media_folder: public/images
+public_folder: /images
+
+# 저장하면 곧바로 main 에 커밋되고 GitHub Actions 가 재배포한다 (약 1~2분)
+publish_mode: simple
+
+collections:
+  # ─────────────────────────────────────────────
+  - name: experience
+    label: 경력 · 활동
+    label_singular: 항목
+    folder: src/content/experience
+    extension: json
+    format: json
+    create: true
+    slug: '{{fields.order}}-{{fields.start}}'
+    summary: '{{fields.order}}. {{fields.title.ko}}'
+    sortable_fields: [order, start]
+    fields:
+      - name: kind
+        label: 구분
+        widget: select
+        hint: '주요 경력은 카드로, 활동은 표 한 줄로 표시됩니다'
+        options:
+          - { label: '주요 경력 (카드)', value: main }
+          - { label: '활동 · 대회 (표)', value: sub }
+      - { name: order, label: 표시 순서, widget: number, value_type: int, min: 1 }
+      - { name: cv, label: CV 에 포함, widget: boolean, default: true }
+      - name: title
+        label: 직함 · 제목
+        widget: object
+        fields:
+          - { name: ko, label: 한국어, widget: string }
+          - { name: en, label: English, widget: string }
+      - name: organization
+        label: 소속
+        widget: object
+        required: false
+        fields:
+          - { name: ko, label: 한국어, widget: string, required: false }
+          - { name: en, label: English, widget: string, required: false }
+      - name: location
+        label: 지역
+        widget: object
+        required: false
+        fields:
+          - { name: ko, label: 한국어, widget: string, required: false }
+          - { name: en, label: English, widget: string, required: false }
+      - { name: start, label: 시작, widget: string, pattern: ['^\d{4}(-(0[1-9]|1[0-2]))?$', 'YYYY 또는 YYYY-MM 형식으로 입력하세요'], hint: '2026-06 처럼. 월을 모르면 2026 만 써도 됩니다' }
+      - { name: end, label: 종료, widget: string, required: false, hint: '진행 중이면 present, 단일 시점이면 비워 두세요. 그 외에는 2026-06 형식' }
+      - name: periodNote
+        label: 기간 부연
+        widget: object
+        required: false
+        hint: '기간 뒤 괄호에 들어갑니다. 예 - 예정'
+        fields:
+          - { name: ko, label: 한국어, widget: string, required: false }
+          - { name: en, label: English, widget: string, required: false }
+      - name: description
+        label: 설명
+        widget: object
+        required: false
+        hint: '설명이 있으면 카드로, 없으면 표 한 줄로 나갑니다'
+        fields:
+          - { name: ko, label: 한국어, widget: text, required: false }
+          - { name: en, label: English, widget: text, required: false }
+      - name: cvText
+        label: CV 전용 문장
+        widget: object
+        required: false
+        hint: '비워 두면 위 설명을 씁니다. 줄바꿈 하나가 CV 불릿 하나가 됩니다'
+        fields:
+          - { name: ko, label: 한국어, widget: text, required: false }
+          - { name: en, label: English, widget: text, required: false }
+  # ─────────────────────────────────────────────
+  - name: research
+    label: 연구 · 논문
+    label_singular: 연구
+    folder: src/content/research
+    extension: json
+    format: json
+    create: true
+    slug: '{{fields.order}}-{{fields.start}}'
+    summary: '{{fields.order}}. {{fields.title.ko}}'
+    sortable_fields: [order, start]
+    fields:
+      - { name: order, label: 표시 순서, widget: number, value_type: int, min: 1 }
+      - { name: cv, label: CV 에 포함, widget: boolean, default: true }
+      - name: title
+        label: 제목
+        widget: object
+        fields:
+          - { name: ko, label: 한국어, widget: string }
+          - { name: en, label: English, widget: string }
+      - name: organization
+        label: 학회 · 소속
+        widget: object
+        fields:
+          - { name: ko, label: 한국어, widget: string }
+          - { name: en, label: English, widget: string }
+      - { name: start, label: 시작, widget: string, pattern: ['^\d{4}(-(0[1-9]|1[0-2]))?$', 'YYYY 또는 YYYY-MM 형식으로 입력하세요'] }
+      - { name: end, label: 종료, widget: string, required: false, hint: '진행 중이면 present, 단일 시점이면 비워 두세요' }
+      - name: periodNote
+        label: 기간 부연
+        widget: object
+        required: false
+        fields:
+          - { name: ko, label: 한국어, widget: string, required: false }
+          - { name: en, label: English, widget: string, required: false }
+      - name: description
+        label: 설명
+        widget: object
+        hint: '빈 줄로 문단을 나누면 CV 에는 첫 문단만 실립니다'
+        fields:
+          - { name: ko, label: 한국어, widget: text }
+          - { name: en, label: English, widget: text }
+      - name: tags
+        label: 태그
+        widget: object
+        hint: 'ko 와 en 의 개수가 같아야 합니다'
+        fields:
+          - { name: ko, label: 한국어, widget: list, field: { name: tag, label: 태그, widget: string } }
+          - { name: en, label: English, widget: list, field: { name: tag, label: Tag, widget: string } }
+      - { name: link, label: 논문 링크, widget: string, required: false, pattern: ['^https?://', 'http(s):// 로 시작하는 주소를 입력하세요'] }
+      - name: status
+        label: 상태
+        widget: select
+        options:
+          - { label: '게재 확정 (CV 논문 섹션으로)', value: accepted }
+          - { label: '진행 중', value: in-progress }
+          - { label: '완료', value: completed }
+      - name: cvText
+        label: CV 전용 문장
+        widget: object
+        required: false
+        hint: '비워 두면 위 설명을 씁니다. 줄바꿈 하나가 CV 불릿 하나가 됩니다'
+        fields:
+          - { name: ko, label: 한국어, widget: text, required: false }
+          - { name: en, label: English, widget: text, required: false }
+  # ─────────────────────────────────────────────
+  - name: projects
+    label: 프로젝트
+    label_singular: 프로젝트
+    folder: src/content/projects
+    extension: json
+    format: json
+    create: true
+    slug: 'project-{{fields.order}}'
+    summary: '{{fields.order}}. {{fields.title.ko}}'
+    sortable_fields: [order]
+    fields:
+      - { name: order, label: 표시 순서, widget: number, value_type: int, min: 1 }
+      - { name: cv, label: CV 에 포함, widget: boolean, default: true }
+      - name: title
+        label: 제목
+        widget: object
+        fields:
+          - { name: ko, label: 한국어, widget: string }
+          - { name: en, label: English, widget: string }
+      - name: description
+        label: 설명
+        widget: object
+        fields:
+          - { name: ko, label: 한국어, widget: text }
+          - { name: en, label: English, widget: text }
+      - name: tags
+        label: 태그
+        widget: object
+        hint: 'ko 와 en 의 개수가 같아야 합니다'
+        fields:
+          - { name: ko, label: 한국어, widget: list, field: { name: tag, label: 태그, widget: string } }
+          - { name: en, label: English, widget: list, field: { name: tag, label: Tag, widget: string } }
+      - { name: link, label: 링크, widget: string, pattern: ['^https?://', 'http(s):// 로 시작하는 주소를 입력하세요'] }
+      - name: status
+        label: 상태
+        widget: select
+        options:
+          - { label: '완료', value: completed }
+          - { label: '진행 중', value: in-progress }
+          - { label: '게재 확정', value: accepted }
+      - name: cvText
+        label: CV 전용 문장
+        widget: object
+        required: false
+        hint: '비워 두면 위 설명을 씁니다. 줄바꿈 하나가 CV 불릿 하나가 됩니다'
+        fields:
+          - { name: ko, label: 한국어, widget: text, required: false }
+          - { name: en, label: English, widget: text, required: false }
+  # ─────────────────────────────────────────────
+  - name: repos
+    label: GitHub 저장소 노출
+    label_singular: 저장소
+    folder: src/content/repos
+    extension: json
+    format: json
+    create: true
+    slug: '{{fields.order}}-{{fields.name}}'
+    summary: '{{fields.order}}. {{fields.name}}'
+    sortable_fields: [order, name]
+    fields:
+      - { name: order, label: 표시 순서, widget: number, value_type: int, min: 1 }
+      - { name: name, label: 저장소 이름, widget: string, hint: 'GitHub 상의 이름과 대소문자까지 정확히 같아야 설명·언어·스타가 붙습니다' }
+      - { name: visible, label: 사이트에 노출, widget: boolean, default: true }
+      - name: description
+        label: 설명 직접 쓰기
+        widget: object
+        required: false
+        hint: '비워 두면 GitHub 저장소 설명을 그대로 씁니다'
+        fields:
+          - { name: ko, label: 한국어, widget: text, required: false }
+          - { name: en, label: English, widget: text, required: false }
+
+  # ─────────────────────────────────────────────
+  - name: awards
+    label: 수상
+    label_singular: 수상
+    folder: src/content/awards
+    extension: json
+    format: json
+    create: true
+    slug: '{{fields.year}}-{{fields.order}}'
+    summary: '{{fields.year}} · {{fields.name.ko}}'
+    sortable_fields: [order, year]
+    fields:
+      - { name: order, label: 같은 해 안에서의 순서, widget: number, value_type: int, min: 1 }
+      - { name: cv, label: CV 에 포함, widget: boolean, default: true }
+      - name: name
+        label: 수상명
+        widget: object
+        fields:
+          - { name: ko, label: 한국어, widget: string }
+          - { name: en, label: English, widget: string }
+      - { name: year, label: 연도, widget: string, pattern: ['^\d{4}$', 'YYYY 형식으로 입력하세요'] }
+
+  # ─────────────────────────────────────────────
+  - name: memberships
+    label: 명예 · 멤버십
+    label_singular: 항목
+    folder: src/content/memberships
+    extension: json
+    format: json
+    create: true
+    slug: '{{fields.order}}-{{fields.start}}'
+    summary: '{{fields.order}}. {{fields.title.ko}}'
+    sortable_fields: [order, start]
+    fields:
+      - { name: order, label: 표시 순서, widget: number, value_type: int, min: 1 }
+      - { name: cv, label: CV 에 포함, widget: boolean, default: true }
+      - name: title
+        label: 명칭
+        widget: object
+        fields:
+          - { name: ko, label: 한국어, widget: string }
+          - { name: en, label: English, widget: string }
+      - name: organization
+        label: 기관
+        widget: object
+        fields:
+          - { name: ko, label: 한국어, widget: string }
+          - { name: en, label: English, widget: string }
+      - { name: start, label: 시작, widget: string, pattern: ['^\d{4}(-(0[1-9]|1[0-2]))?$', 'YYYY 또는 YYYY-MM 형식으로 입력하세요'] }
+      - { name: end, label: 종료, widget: string, required: false, hint: '진행 중이면 present, 단일 시점이면 비워 두세요' }
+      - name: periodNote
+        label: 기간 부연
+        widget: object
+        required: false
+        fields:
+          - { name: ko, label: 한국어, widget: string, required: false }
+          - { name: en, label: English, widget: string, required: false }
+      - name: description
+        label: 설명
+        widget: object
+        required: false
+        fields:
+          - { name: ko, label: 한국어, widget: text, required: false }
+          - { name: en, label: English, widget: text, required: false }
+      - { name: issuer, label: 수여 기관 표기, widget: string, required: false, hint: 'ko/en 을 함께 담은 한 줄. 예 - 한국공학한림원 · National Academy of Engineering of Korea' }
+      - name: cvText
+        label: CV 전용 문장
+        widget: object
+        required: false
+        hint: '비워 두면 위 설명을 씁니다. 줄바꿈 하나가 CV 불릿 하나가 됩니다'
+        fields:
+          - { name: ko, label: 한국어, widget: text, required: false }
+          - { name: en, label: English, widget: text, required: false }
+  # ─────────────────────────────────────────────
+  - name: education
+    label: 학력
+    label_singular: 학력
+    folder: src/content/education
+    extension: json
+    format: json
+    create: true
+    slug: '{{fields.order}}-{{fields.start}}'
+    summary: '{{fields.order}}. {{fields.organization.ko}}'
+    sortable_fields: [order, start]
+    fields:
+      - { name: order, label: 표시 순서, widget: number, value_type: int, min: 1 }
+      - { name: cv, label: CV 에 포함, widget: boolean, default: true }
+      - name: title
+        label: 학위 · 전공
+        widget: object
+        fields:
+          - { name: ko, label: 한국어, widget: string }
+          - { name: en, label: English, widget: string }
+      - name: organization
+        label: 학교
+        widget: object
+        fields:
+          - { name: ko, label: 한국어, widget: string }
+          - { name: en, label: English, widget: string }
+      - { name: start, label: 입학, widget: string, pattern: ['^\d{4}(-(0[1-9]|1[0-2]))?$', 'YYYY 또는 YYYY-MM 형식으로 입력하세요'] }
+      - { name: end, label: 졸업, widget: string, required: false, hint: '재학 중이면 present, 졸업 예정이면 그 시점을 넣고 아래 부연에 예정 이라고 적으세요' }
+      - name: periodNote
+        label: 기간 부연
+        widget: object
+        required: false
+        fields:
+          - { name: ko, label: 한국어, widget: string, required: false }
+          - { name: en, label: English, widget: string, required: false }
+      - name: description
+        label: 설명
+        widget: object
+        required: false
+        fields:
+          - { name: ko, label: 한국어, widget: text, required: false }
+          - { name: en, label: English, widget: text, required: false }
+      - name: cvText
+        label: CV 전용 문장
+        widget: object
+        required: false
+        hint: '비워 두면 위 설명을 씁니다. 줄바꿈 하나가 CV 불릿 하나가 됩니다'
+        fields:
+          - { name: ko, label: 한국어, widget: text, required: false }
+          - { name: en, label: English, widget: text, required: false }
+
+  # ─────────────────────────────────────────────
+  - name: cv_settings
+    label: CV 문서 구성
+    files:
+      - name: settings
+        label: 섹션 순서와 표기
+        file: src/content/cv-config/settings.json
+        extension: json
+        format: json
+        fields:
+          - { name: showKoreanName, label: 한글 이름 함께 표시, widget: boolean, default: true }
+          - name: location
+            label: 소재지
+            widget: object
+            fields:
+              - { name: ko, label: 한국어, widget: string }
+              - { name: en, label: English, widget: string }
+          - name: sections
+            label: 섹션 순서
+            widget: list
+            hint: '끌어서 순서를 바꿉니다. 이 순서가 그대로 CV 의 섹션 순서가 됩니다. 항목이 하나도 없는 섹션은 자동으로 빠집니다'
+            fields:
+              - name: id
+                label: 섹션
+                widget: select
+                options:
+                  - { label: '학력', value: education }
+                  - { label: '논문', value: publications }
+                  - { label: '연구 경력', value: research }
+                  - { label: '경력', value: experience }
+                  - { label: '수상 및 명예', value: honors }
+                  - { label: '프로젝트', value: projects }
+                  - { label: '대외 활동', value: activities }
+              - { name: enabled, label: 포함, widget: boolean, default: true }
+              - name: label
+                label: CV 에 찍힐 제목
+                widget: object
+                fields:
+                  - { name: ko, label: 한국어, widget: string }
+                  - { name: en, label: English, widget: string }
