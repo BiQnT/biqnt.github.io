@@ -10,15 +10,23 @@
     "en": "POSTECH Computer Science & Engineering"
   },
   "keywords": {
-    "ko": ["블록체인", "AI 에이전트", "컴퓨터 시스템"],
-    "en": ["Blockchain", "AI Agent", "Computer Systems"]
+    "ko": [
+      "블록체인",
+      "AI 에이전트",
+      "컴퓨터 시스템"
+    ],
+    "en": [
+      "Blockchain",
+      "AI Agent",
+      "Computer Systems"
+    ]
   },
   "intro": {
-    "ko": "블록체인, AI agent, 컴퓨터 시스템에 관심을 가지고 연구하는 학부생입니다.",
-    "en": "An undergraduate researcher interested in blockchain, AI agent, and computer systems."
+    "ko": "블록체인, AI agent, 컴퓨터 시스템에 관심을 가지고 활동하는 학부생입니다.",
+    "en": "An undergraduate student interested in blockchain, AI agent, and computer systems."
   },
   "about": {
-    "ko": "POSTECH 컴퓨터공학과에 재학 중이며, Center for Cryptocurrency and Blockchain Research에서 에이전트 간(A2A) 결제의 신뢰 시스템을 연구했습니다. 그 결과를 제1저자 논문으로 정리해 IEEE CryptoEx 2026에 게재가 확정되었습니다.\n\n현재는 코인원에서 AX Engineer 인턴으로 가상자산 거래소를 위한 AI 에이전트를 만들고 있습니다. 자율 에이전트가 경제 주체로 움직이기 시작할 때 무엇이 그들 사이의 신뢰를 담보하는지에 관심이 있습니다.",
-    "en": "I am an undergraduate at POSTECH Computer Science & Engineering. At the Center for Cryptocurrency and Blockchain Research I studied trust systems for agent-to-agent payment, work that became a first-author paper accepted to IEEE CryptoEx 2026.\n\nI am currently an AX Engineer intern at Coinone, building AI agents for a crypto exchange. I am interested in what underwrites trust between autonomous agents once they begin acting as economic parties."
+    "ko": "POSTECH 컴퓨터공학과에 재학 중이며, Center for Cryptocurrency and Blockchain Research에서 에이전트 간(A2A) 결제의 신뢰 시스템을 연구했습니다. 그 결과를 제1저자 논문으로 발표해 IEEE CryptoEx 2026에 게재하였고 이를 바탕으로 연구 과정의 end to end를 배울 수 있었습니다.\n\n또한 Coinone에서 AX 인턴을 통해 규제 업무 등을 자동화 및 전산화를 진행하고 있습니다. 해당 경험을 통해 PO, 풀스택 개발, QA 능력, 실무상 DevOps의 업무 이해도를 늘리고 한국 규제 관련 지식 및 현황을 배울 수 있었습니다.",
+    "en": "As a Computer Science and Engineering student at POSTECH, I conducted research on trust systems for agent-to-agent (A2A) payments at the Center for Cryptocurrency and Blockchain Research. I published my findings as the first author in IEEE CryptoEx 2026, which allowed me to master the end-to-end research workflow.Furthermore, during my AX (AI Transformation) internship at Coinone, I have been driving the automation and computerization of regulatory compliance tasks. Through this experience, I have expanded my capabilities across Product Ownership (PO), full-stack development, and QA, while building a practical understanding of DevOps and gaining in-depth knowledge of South Korean regulatory compliance landscapes."
   }
 }
