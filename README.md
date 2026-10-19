@@ -39,6 +39,19 @@
 
 ---
 
+## LinkedIn 에서 가져오기
+
+LinkedIn 은 프로필을 읽는 API 를 주지 않는다. 대신 Claude Code 스킬로 반자동화한다.
+
+1. LinkedIn 프로필 → `더보기(More)` → `PDF로 저장(Save to PDF)`
+2. 이 저장소에서 Claude Code 를 열고 `/sync-linkedin ~/Downloads/Profile.pdf`
+3. 새 항목·바뀐 항목 목록을 확인하고 승인하면 `src/content/` 에 ko/en 두 언어로 써진다
+4. `git diff` 를 보고 커밋한다
+
+사이트에만 있는 항목은 지우지 않는다. 자세한 규칙은 `.claude/skills/sync-linkedin/SKILL.md` 에 있다.
+
+---
+
 ## 데이터 구조
 
 내용은 전부 `src/content/` 아래에 **항목당 파일 하나**로 들어 있다.
