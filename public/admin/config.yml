@@ -144,6 +144,7 @@ collections:
         label: 상태
         widget: select
         options:
+          - { label: '게재 (발표·출판 완료, CV 논문 섹션으로)', value: published }
           - { label: '게재 확정 (CV 논문 섹션으로)', value: accepted }
           - { label: '진행 중', value: in-progress }
           - { label: '완료', value: completed }

@@ -66,8 +66,9 @@ const researchAll = inCv(await getOrdered('research')).map((e) => ({
   link: e.data.link,
   status: e.data.status,
 }));
-const publications = researchAll.filter((r) => r.status === 'accepted');
-const researchExperience = researchAll.filter((r) => r.status !== 'accepted');
+const isPaper = (s: string) => s === 'accepted' || s === 'published';
+const publications = researchAll.filter((r) => isPaper(r.status));
+const researchExperience = researchAll.filter((r) => !isPaper(r.status));
 
 /** 섹션 순서와 표기는 CV 구성 설정에서 온다. admin 에서 끌어서 바꿀 수 있다. */
 const profile = (await getCollection('profile'))[0]?.data;
