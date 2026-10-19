@@ -3,7 +3,7 @@ import '../styles/global.css';
 import { useTranslations, getLocalizedPath, getOtherLang, getLanguageLabel } from '../i18n/utils';
 import type { Lang } from '../i18n/utils';
 import { CV_PATH, SOCIAL, SECTIONS } from '../lib/site';
-import { getOrdered } from '../lib/content';
+import { getCollection } from 'astro:content';
 
 interface Props {
   lang: Lang;
@@ -16,10 +16,13 @@ const t = useTranslations(lang);
 
 const otherLang = getOtherLang(lang);
 
-/** 레일의 "현재 소속": 진행 중인 주요 경력 중 가장 최근 것. 없으면 표시하지 않는다. */
-const experience = await getOrdered('experience');
-const current = experience.find((e) => e.data.kind === 'main' && e.data.end === 'present');
-const currentOrg = current?.data.organization?.[lang] ?? null;
+/**
+ * 레일의 "현재 소속": 프로필의 소속(학교·학과)을 그대로 쓴다.
+ * 진행 중인 경력에서 고르면 프리랜서처럼 이름만 걸어 둔 곳이 소속으로 보일 수 있어서다.
+ * 바꾸려면 admin 의 프로필 > 이름과 소개 > "소속 · 직함" 을 고친다.
+ */
+const profile = (await getCollection('profile'))[0]?.data;
+const currentOrg = profile?.title[lang] ?? null;
 
 const cvHref = CV_PATH ? getLocalizedPath(`/${CV_PATH}`, lang) : null;
 ---
