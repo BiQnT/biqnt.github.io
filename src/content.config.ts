@@ -47,7 +47,8 @@ const chronological = <T extends { start: string; end?: string }>(v: T) =>
   v.end === undefined || v.end === 'present' || v.end >= v.start;
 const chronologicalMessage = { message: 'end 는 start 보다 빠를 수 없습니다', path: ['end'] };
 
-const status = z.enum(['completed', 'in-progress', 'accepted']);
+/** accepted 는 게재 확정, published 는 발표를 마치고 출판된 상태. 둘 다 CV 논문 섹션에 실린다 */
+const status = z.enum(['completed', 'in-progress', 'accepted', 'published']);
 
 /** 표시 순서. 날짜만으로는 정할 수 없는 항목(같은 해의 수상 등)이 있어 명시적으로 관리한다. */
 const order = z.number().int().positive();
